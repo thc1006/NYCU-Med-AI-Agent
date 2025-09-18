@@ -1,0 +1,284 @@
+# Taiwan Localization Requirement: Emergency Services Integration
+# Taiwan-specific emergency services and cultural considerations
+
+metadata:
+  id: "TW-EMERGENCY-001"
+  title: "台灣緊急服務整合"
+  description: "Integrate Taiwan emergency services (119, 110, 112, 113, 165) with culturally appropriate emergency response guidance"
+  priority: "critical"
+  category: "emergency"
+  taiwan_specific: true
+  created_date: "2025-09-19"
+  updated_date: "2025-09-19"
+  status: "approved"
+
+taiwan_requirement:
+  description: |
+    The system shall provide comprehensive integration with Taiwan's emergency services
+    system, including all relevant emergency numbers with clear descriptions of when
+    and how to use each service, presented in culturally appropriate Traditional Chinese.
+
+  localization_scope:
+    language: "zh-TW"
+    region: "TW"
+    cultural_context: |
+      台灣緊急服務體系整合考量：
+      • 119 為主要醫療急救號碼
+      • 112 為行動電話國際緊急號碼（無 SIM 卡也可撥打）
+      • 家屬通知在急救過程中的重要性
+      • 台灣民眾對醫學中心的信賴度較高
+
+taiwan_emergency_system:
+  primary_numbers:
+    - number: "119"
+      service: "消防／救護"
+      description: "Fire and ambulance services"
+      when_to_use: |
+        醫療緊急狀況、火災、需要救護車時撥打：
+        • 心臟病發、中風、嚴重外傷
+        • 呼吸困難、意識不清
+        • 大量出血、嚴重燒傷
+        • 需要緊急醫療處置
+
+    - number: "110"
+      service: "警政"
+      description: "Police services"
+      when_to_use: |
+        治安事件、交通事故、緊急求助時撥打：
+        • 交通意外事故
+        • 治安案件、暴力事件
+        • 失蹤人口、緊急協助
+
+    - number: "112"
+      service: "行動電話國際緊急號碼"
+      description: "GSM international emergency (works without SIM)"
+      when_to_use: |
+        手機緊急情況時撥打（無 SIM 卡也可撥通）：
+        • 手機無訊號但有緊急需求
+        • 國際漫遊時的緊急情況
+        • 其他緊急號碼無法接通時
+
+  secondary_numbers:
+    - number: "113"
+      service: "婦幼保護專線"
+      description: "Women and children protection hotline"
+      when_to_use: |
+        婦幼保護相關事件：
+        • 家庭暴力、兒童虐待
+        • 性侵害案件
+        • 兒童及婦女保護諮詢
+
+    - number: "165"
+      service: "反詐騙諮詢專線"
+      description: "Anti-fraud consultation hotline"
+      when_to_use: |
+        詐騙案件諮詢、通報：
+        • 可疑詐騙電話、簡訊
+        • 網路詐騙、投資詐騙
+        • 詐騙案件諮詢
+
+taiwan_healthcare_system:
+  nhia_integration:
+    required: true
+    description: "Integration with National Health Insurance Administration"
+    data_sources:
+      - "健保特約醫療院所名冊"
+      - "醫療院所基本資料"
+      - "急診即時資訊"
+
+  medical_institutions:
+    classification:
+      - name: "醫學中心"
+        description: "Medical Centers - highest level care"
+        emergency_priority: "highest"
+      - name: "區域醫院"
+        description: "Regional Hospitals - comprehensive care"
+        emergency_priority: "high"
+      - name: "地區醫院"
+        description: "District Hospitals - general care"
+        emergency_priority: "medium"
+      - name: "基層診所"
+        description: "Primary Clinics - basic care"
+        emergency_priority: "low"
+
+  specialized_services:
+    emergency_departments: "急診科"
+    intensive_care: "加護病房 (ICU)"
+    emergency_surgery: "急診外科"
+    cardiology_emergency: "心臟科急診"
+
+taiwan_regulatory_compliance:
+  medical_laws:
+    - "醫療法 (Medical Care Act)"
+    - "緊急醫療救護法 (Emergency Medical Services Act)"
+    - "救護車裝備及管理辦法"
+
+  data_protection:
+    primary_law: "個人資料保護法 (PDPA)"
+    requirements:
+      - "緊急情況下個資處理例外條款"
+      - "醫療急救資料最小化原則"
+      - "家屬通知與隱私平衡"
+
+  healthcare_regulations:
+    authority: "衛生福利部 (Ministry of Health and Welfare)"
+    key_regulations:
+      - "醫療機構急診室設置標準"
+      - "救護車與醫療院所轉診規範"
+      - "緊急醫療資訊系統管理"
+
+language_requirements:
+  primary_language: "zh-TW"
+  character_set: "Traditional Chinese"
+
+  user_interface:
+    emergency_labels: "緊急服務、撥打 119、立即就醫"
+    priority_messages: "緊急、危險、立即、馬上"
+    guidance_text: "症狀嚴重請立即撥打 119"
+    disclaimer_text: "本系統不能取代專業醫療診斷"
+
+  content_localization:
+    emergency_instructions: |
+      緊急處置指引：
+      1. 保持冷靜，評估現場安全
+      2. 撥打 119 並說明症狀
+      3. 提供準確位置資訊
+      4. 聽從調度員指示
+      5. 準備就醫相關文件
+
+    cultural_considerations: |
+      台灣文化脈絡考量：
+      • 家屬陪同就醫的重要性
+      • 對醫學中心的偏好
+      • 中醫西醫整合觀念
+      • 長者就醫習慣
+
+  api_localization:
+    google_places:
+      language: "zh-TW"
+      region: "TW"
+      types: ["hospital", "emergency_room", "urgent_care"]
+
+taiwan_geographic_context:
+  administrative_divisions:
+    municipalities:
+      - "台北市"
+      - "新北市"
+      - "桃園市"
+      - "台中市"
+      - "台南市"
+      - "高雄市"
+    counties:
+      - "新竹縣"
+      - "苗栗縣"
+      - "彰化縣"
+      - "南投縣"
+      - "雲林縣"
+      - "嘉義縣"
+      - "屏東縣"
+      - "宜蘭縣"
+      - "花蓮縣"
+      - "台東縣"
+      - "澎湖縣"
+      - "金門縣"
+      - "連江縣"
+
+  address_format:
+    structure: "{郵遞區號} {縣市} {區鄉鎮} {路街} {段} {號} {樓}"
+    example: "110 台北市信義區信義路五段7號"
+    validation_pattern: "^\\d{3}\\s+[台臺][北中南].*"
+
+cultural_considerations:
+  emergency_behavior:
+    family_involvement: |
+      家屬通知重要性：
+      • 第一時間通知緊急聯絡人
+      • 家屬陪同就醫的期待
+      • 醫療決策的家庭參與
+
+    hospital_preference: |
+      醫療院所偏好：
+      • 優先選擇醫學中心
+      • 信賴大型公立醫院
+      • 考慮交通便利性
+
+    traditional_medicine: |
+      中醫西醫整合：
+      • 急症以西醫為主
+      • 慢性病考慮中西醫結合
+      • 傳統療法的文化接受度
+
+  communication_style:
+    politeness_level: "formal"
+    emergency_tone: "calm_but_urgent"
+    medical_disclaimers: |
+      醫療免責聲明標準格式：
+      "本系統僅供參考，不構成醫療診斷。
+      緊急情況請立即撥打 119 或前往急診室。"
+
+acceptance_criteria:
+  scenarios:
+    - id: "TW-EMERGENCY-001-001"
+      title: "Taiwan emergency number display"
+      given: "User accesses emergency information"
+      when: "System displays emergency contact options"
+      then: |
+        All Taiwan emergency numbers displayed with Traditional Chinese descriptions:
+        • 119 (消防／救護)
+        • 110 (警政)
+        • 112 (行動電話國際緊急)
+        • 113 (婦幼保護)
+        • 165 (反詐騙)
+
+    - id: "TW-EMERGENCY-001-002"
+      title: "Cultural context integration"
+      given: "Emergency situation detected"
+      when: "System provides emergency guidance"
+      then: |
+        Guidance includes Taiwan-specific cultural elements:
+        • Family notification importance
+        • Medical center preference
+        • Traditional Chinese medical terminology
+
+    - id: "TW-EMERGENCY-001-003"
+      title: "NHIA hospital integration"
+      given: "User needs emergency medical care"
+      when: "System searches for hospitals"
+      then: |
+        Results prioritize NHIA-contracted facilities and show:
+        • Hospital classification (醫學中心, 區域醫院, etc.)
+        • Emergency department availability
+        • Health insurance coverage status
+
+compliance_validation:
+  emergency_service_validation:
+    - "All Taiwan emergency numbers accurately displayed"
+    - "Service descriptions in proper Traditional Chinese"
+    - "Cultural context appropriately integrated"
+
+  language_validation:
+    - "Traditional Chinese characters only (no Simplified)"
+    - "Taiwan-specific medical terminology"
+    - "Proper emergency communication tone"
+
+  regulatory_validation:
+    - "Compliance with Taiwan Emergency Medical Services Act"
+    - "PDPA requirements for emergency data handling"
+    - "Healthcare regulations adherence"
+
+testing_requirements:
+  localization_tests:
+    - "Emergency number display accuracy"
+    - "Traditional Chinese character encoding"
+    - "Taiwan address format validation"
+    - "Cultural context appropriateness"
+
+  integration_tests:
+    - "NHIA data integration accuracy"
+    - "Google Places API Taiwan-specific calls"
+    - "Emergency service routing logic"
+
+  cultural_tests:
+    - "Medical terminology cultural fit"
+    - "Emergency guidance cultural appropriateness"
+    - "Family involvement messaging accuracy"

@@ -1,0 +1,309 @@
+# PDPA Compliance Requirement: Personal Data Collection
+# Taiwan Personal Data Protection Act compliance for medical data
+
+metadata:
+  id: "PDPA-COLLECT-001"
+  title: "個人資料蒐集處理合規"
+  description: "Ensure Taiwan PDPA compliance for collecting and processing personal medical data including symptoms and location information"
+  priority: "high"
+  category: "collect"
+  pdpa_relevant: true
+  created_date: "2025-09-19"
+  updated_date: "2025-09-19"
+  status: "approved"
+
+pdpa_requirement:
+  description: |
+    The system shall comply with Taiwan's Personal Data Protection Act (PDPA) when
+    collecting, processing, and utilizing personal data including medical symptoms,
+    location information, and user interactions with proper consent mechanisms
+    and data minimization principles.
+
+  legal_basis: |
+    Legal basis under Taiwan PDPA:
+    • Article 5: Limitations on collection of personal data
+    • Article 6: Notice requirements for personal data collection
+    • Article 20: Limitations on use of personal data
+    • Article 27: Security maintenance obligations
+
+pdpa_compliance:
+  data_classification:
+    type: "medical"
+    categories:
+      - "症狀描述" # Symptom descriptions
+      - "位置資訊" # Location information
+      - "使用者互動記錄" # User interaction logs
+      - "IP 位址" # IP addresses
+      - "瀏覽器資訊" # Browser information
+
+  collection_principles:
+    specific_purpose: |
+      特定目的：
+      1. 提供醫療資訊諮詢服務
+      2. 搜尋就近醫療院所
+      3. 緊急醫療指引
+      4. 系統安全與稽核
+    necessary_scope: true
+    lawful_means: true
+    consent_required: false
+
+    purpose_statement: |
+      個資蒐集目的聲明：
+
+      本系統基於提供醫療資訊服務之特定目的，可能蒐集以下個人資料：
+      • 您提供的症狀描述（僅用於醫療建議分析）
+      • 位置資訊（僅用於搜尋就近醫療院所）
+      • 系統使用記錄（僅用於服務改善與安全稽核）
+
+      我們承諾：
+      ✓ 僅蒐集必要之個人資料
+      ✓ 不會儲存敏感醫療資訊
+      ✓ 位置資訊不會留存
+      ✓ 所有資料均經加密保護
+
+  processing_limitations:
+    purpose_limitation: true
+    data_minimization: true
+    accuracy_requirement: true
+    retention_limitation: true
+
+    processing_conditions:
+      - "法律明文規定" # Legal obligation
+      - "維護當事人生命、身體、健康之必要" # Vital interest protection
+      - "學術研究機構基於公共利益為統計或學術研究而有必要" # Legitimate interest
+
+  data_subject_rights:
+    access_right: true
+    rectification_right: true
+    deletion_right: true
+    portability_right: false
+    objection_right: true
+
+    rights_implementation:
+      access_method: "線上查詢或電子郵件申請"
+      response_timeframe: "15 days"
+      verification_process: "身分驗證後提供資料副本"
+
+taiwan_pdpa_specifics:
+  applicable_articles:
+    - article: "第5條"
+      content: "個人資料之蒐集，應有特定目的，並符合法令規定"
+    - article: "第6條"
+      content: "有關病歷、醫療、基因、性生活、健康檢查及犯罪前科之個人資料，不得蒐集、處理或利用"
+    - article: "第8條"
+      content: "公務機關或非公務機關依第十五條或第十九條規定蒐集非由當事人提供之個人資料"
+    - article: "第20條"
+      content: "非公務機關對個人資料之利用，除第六條第一項所規定資料外，應於蒐集之特定目的必要範圍內為之"
+
+  notification_requirements:
+    collection_notice: true
+    notice_content:
+      - "蒐集機關名稱：台灣醫療 AI 助理系統"
+      - "蒐集目的：醫療資訊諮詢、就近醫療院所搜尋"
+      - "個人資料類別：症狀描述、位置資訊、使用記錄"
+      - "個人資料來源：當事人直接提供、IP 地理定位"
+      - "個人資料利用期間：提供服務期間，最長不超過 7 天"
+      - "個人資料利用地區：台灣地區"
+      - "個人資料利用對象：本系統、合作之醫療資訊提供者"
+      - "個人資料利用方式：自動化處理、人工分析"
+      - "當事人依法得行使之權利：查詢、閱覽、複製、補正、刪除"
+      - "當事人不提供個人資料時，對其權益之影響：無法提供個人化醫療建議服務"
+
+  special_categories:
+    medical_data:
+      extra_protection: true
+      consent_required: false
+      purpose_limitation: "medical_consultation_only"
+
+    sensitive_data:
+      - "症狀描述與健康狀況"
+      - "醫療諮詢內容"
+      - "緊急醫療需求"
+      - "位置與就醫偏好"
+
+security_requirements:
+  technical_safeguards:
+    encryption_at_rest: true
+    encryption_in_transit: true
+    access_controls: true
+    audit_logging: true
+
+  organizational_safeguards:
+    staff_training: true
+    privacy_policies: true
+    incident_response: true
+    vendor_management: true
+
+  specific_measures:
+    - "症狀資料即時匿名化處理"
+    - "位置資訊不落地儲存"
+    - "存取權限最小化原則"
+    - "個資處理活動全程記錄"
+    - "定期個資安全稽核"
+
+data_lifecycle_management:
+  collection:
+    lawful_basis_verification: true
+    consent_mechanism: "明示同意機制（如適用）"
+    notice_provision: true
+
+  storage:
+    retention_period: "7 天（僅限系統稽核記錄）"
+    storage_location: "台灣境內伺服器"
+    backup_procedures: "加密備份，相同保存期限"
+
+  use:
+    purpose_compliance: true
+    access_logging: true
+    usage_monitoring: true
+
+  transfer:
+    international_transfer: false
+    adequacy_decision: "N/A"
+    safeguards_applied: "僅限台灣境內處理"
+
+  deletion:
+    retention_schedule: "服務提供完成後立即刪除（症狀資料）"
+    secure_deletion: true
+    deletion_verification: true
+
+medical_data_specifics:
+  health_information:
+    classification: "special_category"
+    extra_consent: false
+    medical_purpose_only: true
+
+  symptom_data:
+    anonymization: true
+    pseudonymization: true
+    minimal_collection: true
+
+  emergency_data:
+    emergency_exception: true
+    vital_interest_protection: true
+    immediate_processing_allowed: true
+
+consent_management:
+  consent_types:
+    explicit_consent: "個資蒐集明示同意"
+    implied_consent: "服務使用隱含同意"
+    opt_in: true
+    opt_out: true
+
+  consent_characteristics:
+    freely_given: true
+    specific: true
+    informed: true
+    unambiguous: true
+    withdrawable: true
+
+  consent_mechanisms:
+    consent_form: "線上同意表單"
+    checkbox_design: "明確勾選機制"
+    withdrawal_method: "隨時可撤回同意"
+
+breach_response:
+  notification_obligations:
+    authority_notification: "72 hours to 個人資料保護委員會"
+    data_subject_notification: "when_high_risk"
+
+  response_procedures:
+    - "個資外洩事件即時偵測"
+    - "損害程度與影響範圍評估"
+    - "主管機關 72 小時內通報"
+    - "當事人高風險情況下通知"
+    - "損害控制與補救措施"
+
+compliance_monitoring:
+  privacy_impact_assessment:
+    required_when: "high_risk_processing"
+    assessment_criteria:
+      - "醫療個資處理風險評估"
+      - "資料主體權益影響分析"
+      - "技術與組織措施充分性"
+    review_frequency: "annually"
+
+  audit_requirements:
+    internal_audit: "quarterly"
+    external_audit: "annually"
+    audit_scope:
+      - "個資蒐集處理程序"
+      - "技術安全措施"
+      - "組織管理制度"
+
+  documentation:
+    processing_records: true
+    consent_records: true
+    breach_records: true
+    training_records: true
+
+acceptance_criteria:
+  scenarios:
+    - id: "PDPA-COLLECT-001-001"
+      title: "Personal data collection notice"
+      given: "User accesses medical consultation service"
+      when: "System is about to collect symptom information"
+      then: |
+        Clear PDPA collection notice displayed with:
+        • Purpose of data collection in Traditional Chinese
+        • Types of data collected
+        • Data subject rights
+        • Contact information for inquiries
+
+    - id: "PDPA-COLLECT-001-002"
+      title: "Data minimization implementation"
+      given: "User provides symptom information"
+      when: "System processes the data"
+      then: |
+        System collects only necessary data:
+        • Symptom descriptions (no personal identifiers)
+        • Approximate location (not exact coordinates)
+        • Session data (anonymized)
+
+    - id: "PDPA-COLLECT-001-003"
+      title: "Consent withdrawal mechanism"
+      given: "User has provided data to system"
+      when: "User wants to withdraw consent"
+      then: |
+        System provides clear withdrawal mechanism and:
+        • Stops processing personal data immediately
+        • Deletes stored personal data within 24 hours
+        • Confirms withdrawal to user
+
+validation_checklist:
+  legal_compliance:
+    - [ ] PDPA Article 5 compliance (specific purpose)
+    - [ ] PDPA Article 6 compliance (notice requirements)
+    - [ ] PDPA Article 20 compliance (use limitations)
+    - [ ] Data subject rights implemented
+
+  technical_compliance:
+    - [ ] Encryption at rest and in transit
+    - [ ] Access controls implemented
+    - [ ] Audit logging enabled
+    - [ ] Secure deletion capability
+
+  organizational_compliance:
+    - [ ] Privacy policies in Traditional Chinese
+    - [ ] Staff PDPA training completed
+    - [ ] Incident response procedures
+    - [ ] Regular compliance audits
+
+testing_requirements:
+  compliance_tests:
+    - "PDPA notice display verification"
+    - "Data collection scope limitation testing"
+    - "Consent withdrawal process testing"
+    - "Data retention period compliance"
+
+  security_tests:
+    - "Personal data encryption verification"
+    - "Access control effectiveness testing"
+    - "Audit trail completeness verification"
+    - "Data anonymization testing"
+
+  user_experience_tests:
+    - "PDPA notice comprehensibility testing"
+    - "Consent mechanism usability testing"
+    - "Data subject rights exercise testing"
+    - "Multilingual compliance interface testing"

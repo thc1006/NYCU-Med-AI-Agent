@@ -1,0 +1,147 @@
+# Functional Requirement: Symptom Triage Analysis
+# Core symptom analysis and risk assessment functionality
+
+metadata:
+  id: "FR-TRIAGE-001"
+  title: "症狀分級與風險評估系統"
+  description: "Implement symptom triage system that analyzes user-reported symptoms and provides appropriate medical guidance with Taiwan emergency protocols"
+  priority: "critical"
+  category: "triage"
+  taiwan_specific: true
+  medical_safety: true
+  pdpa_relevant: true
+  created_date: "2025-09-19"
+  updated_date: "2025-09-19"
+  status: "approved"
+
+requirement:
+  description: |
+    The system shall provide intelligent symptom triage that analyzes user-reported symptoms
+    and categorizes them by urgency level, providing appropriate medical guidance including
+    Taiwan emergency service recommendations when necessary.
+
+  rationale: |
+    Proper symptom triage is critical for medical safety, ensuring users with serious
+    conditions receive immediate guidance to seek emergency care while providing
+    appropriate self-care guidance for minor symptoms.
+
+  assumptions:
+    - User provides symptom information in Traditional Chinese or English
+    - System has access to Taiwan emergency service information
+    - Medical disclaimers are prominently displayed
+    - System does not provide diagnostic conclusions
+
+  constraints:
+    - Must not provide medical diagnoses
+    - Must always include medical disclaimers
+    - Must prioritize emergency guidance over convenience
+    - Must comply with Taiwan medical device regulations
+
+  dependencies:
+    - "MS-EMERGENCY-001" # Emergency escalation protocols
+    - "TW-EMERGENCY-001" # Taiwan emergency numbers
+    - "PDPA-COLLECT-001" # Personal data handling
+
+acceptance_criteria:
+  scenarios:
+    - id: "AC-FR-TRIAGE-001-001"
+      title: "Emergency symptom detection"
+      given: |
+        User reports emergency symptoms like "胸痛、呼吸困難" (chest pain, difficulty breathing)
+      when: |
+        System analyzes the symptoms
+      then: |
+        System returns level="emergency" with immediate 119 guidance and nearest hospital information
+
+    - id: "AC-FR-TRIAGE-001-002"
+      title: "Regular symptom analysis"
+      given: |
+        User reports common symptoms like "頭痛、輕微發燒" (headache, mild fever)
+      when: |
+        System analyzes the symptoms
+      then: |
+        System returns level="self-care" with monitoring advice and when to seek care
+
+    - id: "AC-FR-TRIAGE-001-003"
+      title: "Medical disclaimer inclusion"
+      given: |
+        Any symptom analysis request
+      when: |
+        System provides triage response
+      then: |
+        Response includes clear medical disclaimer in Traditional Chinese
+
+  performance_criteria:
+    response_time: "< 2000ms for 95% of requests"
+    throughput: "100 concurrent triage requests"
+    availability: "99.9% uptime"
+
+taiwan_localization:
+  language: "zh-TW"
+  region: "TW"
+  emergency_numbers: ["119", "110", "112", "113", "165"]
+  cultural_considerations:
+    - "台灣民眾偏好詳細醫療資訊"
+    - "家屬通知在緊急情況下的重要性"
+    - "中西醫整合考量"
+  regulatory_requirements:
+    - "符合衛生福利部醫療資訊規範"
+    - "遵循醫療法相關規定"
+
+medical_safety:
+  risk_level: "critical"
+  safety_measures:
+    - "緊急症狀關鍵字自動偵測"
+    - "強制顯示 119 撥打指引"
+    - "禁止提供確診性語句"
+    - "所有回應包含免責聲明"
+  escalation_triggers:
+    - "胸痛" # Chest pain
+    - "呼吸困難" # Difficulty breathing
+    - "意識不清" # Loss of consciousness
+    - "劇烈頭痛" # Severe headache
+    - "chest pain"
+    - "difficulty breathing"
+    - "unconscious"
+    - "severe headache"
+  disclaimer_required: true
+
+compliance:
+  pdpa_classification: "sensitive"
+  data_minimization: true
+  consent_required: false
+  retention_period: "7 days for logs only"
+
+testing:
+  unit_tests:
+    - "test_emergency_keyword_detection"
+    - "test_symptom_classification"
+    - "test_disclaimer_inclusion"
+    - "test_taiwan_emergency_response"
+  integration_tests:
+    - "test_triage_with_hospital_search"
+    - "test_multilingual_symptom_processing"
+    - "test_medical_safety_escalation"
+  e2e_tests:
+    - "test_complete_triage_workflow"
+    - "test_emergency_escalation_flow"
+  manual_tests:
+    - "Medical professional review of triage logic"
+    - "Cultural appropriateness validation"
+
+implementation:
+  estimated_effort: "8 story points"
+  technical_approach: "Rule-based triage with optional LLM enhancement"
+  files_affected:
+    - "app/domain/triage.py"
+    - "app/domain/rules_tw.py"
+    - "app/services/llm.py"
+    - "app/routers/triage.py"
+  apis_affected:
+    - "POST /v1/triage"
+
+validation:
+  reviewed_by: "Medical Safety Team"
+  approved_by: "Product Owner"
+  review_notes: "Approved with emphasis on emergency detection accuracy"
+  validation_date: "2025-09-19"

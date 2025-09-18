@@ -1,0 +1,54 @@
+{
+  "name": "medical-ai-task-system",
+  "version": "1.0.0",
+  "description": "Task breakdown and validation system for Medical AI Agent",
+  "main": "validators/spec-task-validator.js",
+  "scripts": {
+    "validate": "node validators/spec-task-validator.js",
+    "generate-template": "node templates/generate-template.js",
+    "execute-task": "node executors/spec-task-executor.js",
+    "medical-validate": "node medical/taiwan-medical-validation.js",
+    "pipeline": "node automation/validation-pipeline.js",
+    "traceability": "node automation/traceability-system.js",
+    "test": "npm run validate-all && npm run traceability-check",
+    "validate-all": "find . -name 'tasks.md' -exec node validators/spec-task-validator.js {} \\;",
+    "traceability-check": "node automation/traceability-system.js analyze",
+    "watch": "node automation/validation-pipeline.js watch '**/*tasks.md'",
+    "setup": "npm install && npm run validate-system",
+    "validate-system": "node -e \"console.log('✅ Task validation system is ready')\""
+  },
+  "keywords": [
+    "medical-ai",
+    "task-validation",
+    "taiwan-healthcare",
+    "test-driven-development",
+    "specification-validation"
+  ],
+  "author": "Medical AI Agent Team",
+  "license": "MIT",
+  "dependencies": {
+    "chokidar": "^3.6.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/medical-ai-agent/task-system"
+  },
+  "bin": {
+    "validate-tasks": "./validators/spec-task-validator.js",
+    "generate-tasks": "./templates/generate-template.js",
+    "execute-task": "./executors/spec-task-executor.js",
+    "medical-validate": "./medical/taiwan-medical-validation.js",
+    "task-pipeline": "./automation/validation-pipeline.js",
+    "task-trace": "./automation/traceability-system.js"
+  },
+  "directories": {
+    "validators": "./validators",
+    "templates": "./templates",
+    "executors": "./executors",
+    "medical": "./medical",
+    "automation": "./automation"
+  }
+}

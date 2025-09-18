@@ -1,0 +1,78 @@
+{
+  "name": "sparc-medical-ai-coordination",
+  "version": "1.0.0",
+  "description": "SPARC Methodology Coordination for Taiwan Medical AI Agent",
+  "main": "sparc-orchestrator.js",
+  "bin": {
+    "sparc-medical": "./sparc-cli.js"
+  },
+  "scripts": {
+    "start": "node sparc-cli.js",
+    "demo": "node sparc-cli.js demo basic",
+    "demo:safety": "node sparc-cli.js demo safety",
+    "demo:full": "node sparc-cli.js demo full",
+    "status": "node sparc-cli.js status overview",
+    "validate": "node sparc-cli.js validate all",
+    "init": "node sparc-cli.js init",
+    "workflow": "node sparc-cli.js workflow full",
+    "safety": "node sparc-cli.js safety status",
+    "emergency": "node sparc-cli.js emergency",
+    "report": "node sparc-cli.js report overview",
+    "phase:spec": "node sparc-cli.js phase execute specification",
+    "phase:pseudo": "node sparc-cli.js phase execute pseudocode",
+    "phase:arch": "node sparc-cli.js phase execute architecture",
+    "phase:refine": "node sparc-cli.js phase execute refinement",
+    "phase:complete": "node sparc-cli.js phase execute completion",
+    "test": "echo \"SPARC coordination tests would run here\"",
+    "lint": "echo \"SPARC coordination linting would run here\""
+  },
+  "keywords": [
+    "sparc",
+    "medical-ai",
+    "taiwan",
+    "healthcare",
+    "methodology",
+    "coordination",
+    "safety",
+    "compliance",
+    "emergency-services",
+    "pdpa"
+  ],
+  "author": "SPARC Medical AI Team",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/taiwan-medical-ai-agent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/taiwan-medical-ai-agent/issues"
+  },
+  "homepage": "https://github.com/your-org/taiwan-medical-ai-agent#readme",
+  "sparc": {
+    "methodology_version": "1.0.0",
+    "medical_safety": true,
+    "taiwan_compliance": true,
+    "emergency_integration": ["119", "112"],
+    "compliance_frameworks": ["pdpa", "mohw"],
+    "phases": [
+      "specification",
+      "pseudocode",
+      "architecture",
+      "refinement",
+      "completion"
+    ],
+    "quality_gates": {
+      "medical_safety": "critical",
+      "taiwan_compliance": "critical",
+      "emergency_procedures": "critical"
+    }
+  }
+}

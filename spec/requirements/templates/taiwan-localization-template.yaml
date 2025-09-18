@@ -1,0 +1,206 @@
+# Taiwan Localization Requirement Template
+# For Taiwan-specific features and localization requirements
+
+metadata:
+  id: "TW-{category}-{number}"  # e.g., TW-EMERGENCY-001
+  title: ""
+  description: ""
+  priority: ""  # critical, high, medium, low
+  category: ""  # emergency, localization, cultural, regulatory
+  taiwan_specific: true
+  created_date: ""
+  updated_date: ""
+  status: ""
+
+taiwan_requirement:
+  description: |
+    Taiwan-specific requirement description.
+    Must specify exact Taiwan localization needs.
+
+  localization_scope:
+    language: "zh-TW"  # Traditional Chinese (Taiwan)
+    region: "TW"       # Taiwan region code
+    cultural_context: |
+      Taiwan-specific cultural considerations and context.
+
+taiwan_emergency_system:
+  primary_numbers:
+    - number: "119"
+      service: "消防／救護"
+      description: "Fire and ambulance services"
+      when_to_use: "醫療緊急、火災、救護車需求"
+
+    - number: "110"
+      service: "警政"
+      description: "Police services"
+      when_to_use: "治安事件、交通事故、緊急求助"
+
+    - number: "112"
+      service: "行動電話國際緊急號碼"
+      description: "GSM international emergency (works without SIM)"
+      when_to_use: "手機無訊號時緊急撥號、國際漫遊緊急"
+
+  secondary_numbers:
+    - number: "113"
+      service: "婦幼保護專線"
+      description: "Women and children protection hotline"
+      when_to_use: "家暴、兒虐、性侵害案件"
+
+    - number: "165"
+      service: "反詐騙諮詢專線"
+      description: "Anti-fraud consultation hotline"
+      when_to_use: "詐騙案件諮詢、通報"
+
+taiwan_healthcare_system:
+  nhia_integration:
+    required: true
+    description: "Integration with National Health Insurance Administration"
+    data_sources:
+      - "健保特約醫療院所名冊"
+      - "醫療院所基本資料"
+      - "健保給付規定"
+
+  medical_institutions:
+    classification:
+      - "醫學中心"      # Medical Centers
+      - "區域醫院"      # Regional Hospitals
+      - "地區醫院"      # District Hospitals
+      - "基層診所"      # Primary Clinics
+
+  specialized_services:
+    emergency_departments: "急診科"
+    intensive_care: "加護病房"
+    outpatient: "門診"
+    inpatient: "住院"
+
+taiwan_regulatory_compliance:
+  medical_laws:
+    - "醫療法"
+    - "醫師法"
+    - "藥事法"
+    - "醫療器材管理法"
+
+  data_protection:
+    primary_law: "個人資料保護法 (PDPA)"
+    requirements:
+      - "個資蒐集告知義務"
+      - "個資處理利用限制"
+      - "個資安全維護義務"
+      - "當事人權利保障"
+
+  healthcare_regulations:
+    authority: "衛生福利部 (MOHW)"
+    key_regulations:
+      - "醫療機構設置標準"
+      - "醫療廣告管理辦法"
+      - "遠距醫療相關規範"
+
+language_requirements:
+  primary_language: "zh-TW"
+  character_set: "Traditional Chinese"
+
+  user_interface:
+    labels: "繁體中文標籤"
+    messages: "繁體中文訊息"
+    errors: "繁體中文錯誤訊息"
+    help_text: "繁體中文說明文字"
+
+  content_localization:
+    medical_terms: "使用台灣醫學術語"
+    emergency_instructions: "台灣緊急處理指示"
+    cultural_sensitivity: "符合台灣文化脈絡"
+
+  api_localization:
+    google_places:
+      language: "zh-TW"
+      region: "TW"
+      types: ["hospital", "pharmacy", "clinic"]
+
+    google_maps:
+      language: "zh-TW"
+      region: "TW"
+
+taiwan_geographic_context:
+  administrative_divisions:
+    municipalities: ["台北市", "新北市", "桃園市", "台中市", "台南市", "高雄市"]
+    counties: ["新竹縣", "苗栗縣", "彰化縣", "南投縣", "雲林縣", "嘉義縣", "屏東縣", "宜蘭縣", "花蓮縣", "台東縣", "澎湖縣", "金門縣", "連江縣"]
+
+  address_format:
+    structure: "{郵遞區號} {縣市} {區鄉鎮} {路街} {號} {樓}"
+    example: "110 台北市信義區信義路五段7號"
+
+  postal_codes:
+    format: "3_digits"
+    validation_required: true
+
+cultural_considerations:
+  medical_terminology:
+    prefer_traditional: true
+    common_terms:
+      fever: "發燒"
+      headache: "頭痛"
+      stomach_ache: "胃痛"
+      cold: "感冒"
+
+  emergency_behavior:
+    family_involvement: "家屬通知重要性"
+    hospital_preference: "就近大醫院偏好"
+    traditional_medicine: "中醫西醫整合考量"
+
+  communication_style:
+    politeness_level: "formal"
+    emergency_tone: "calm_but_urgent"
+    medical_disclaimers: "明確免責聲明"
+
+acceptance_criteria:
+  scenarios:
+    - id: "TW-001"
+      title: "Taiwan emergency number display"
+      given: "User requests emergency information"
+      when: "System displays emergency numbers"
+      then: "All Taiwan emergency numbers (119,110,112,113,165) shown with zh-TW descriptions"
+
+    - id: "TW-002"
+      title: "Traditional Chinese interface"
+      given: "User accesses any system interface"
+      when: "Content is displayed"
+      then: "All text appears in Traditional Chinese (zh-TW)"
+
+    - id: "TW-003"
+      title: "Taiwan address geocoding"
+      given: "User enters Taiwan address"
+      when: "System performs geocoding"
+      then: "Google Geocoding API called with language=zh-TW, region=TW"
+
+compliance_validation:
+  language_validation:
+    - "All user-facing text in Traditional Chinese"
+    - "No Simplified Chinese characters"
+    - "Proper Taiwan medical terminology"
+
+  emergency_validation:
+    - "Emergency numbers prominently displayed"
+    - "Clear escalation instructions"
+    - "Cultural context considered"
+
+  regulatory_validation:
+    - "PDPA compliance maintained"
+    - "Medical disclaimers present"
+    - "Healthcare regulations followed"
+
+testing_requirements:
+  localization_tests:
+    - "Text encoding (UTF-8 Traditional Chinese)"
+    - "Emergency number display accuracy"
+    - "Address format validation"
+    - "API language parameter testing"
+
+  cultural_tests:
+    - "Medical terminology appropriateness"
+    - "Emergency response cultural fit"
+    - "User interface cultural sensitivity"
+
+  integration_tests:
+    - "Google Places API with zh-TW/TW parameters"
+    - "Geocoding with Taiwan addresses"
+    - "NHIA data integration accuracy"

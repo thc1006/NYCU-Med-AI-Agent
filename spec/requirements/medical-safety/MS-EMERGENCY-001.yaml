@@ -1,0 +1,189 @@
+# Medical Safety Requirement: Emergency Escalation Protocols
+# Critical safety requirement for emergency situations
+
+metadata:
+  id: "MS-EMERGENCY-001"
+  title: "緊急情況升級協議"
+  description: "Define emergency escalation protocols for life-threatening symptoms with Taiwan emergency service integration"
+  severity: "critical"
+  category: "emergency"
+  taiwan_emergency_relevant: true
+  created_date: "2025-09-19"
+  updated_date: "2025-09-19"
+  status: "approved"
+
+safety_requirement:
+  description: |
+    The system shall automatically detect life-threatening symptoms and immediately
+    provide clear escalation guidance directing users to call 119 (Taiwan emergency
+    services) and seek immediate medical attention.
+
+  safety_rationale: |
+    Delayed medical intervention in emergency situations can result in permanent
+    disability or death. The system must prioritize user safety by providing
+    immediate, clear emergency guidance for critical symptoms.
+
+  hazard_analysis:
+    potential_hazards:
+      - "Delayed emergency response due to unclear guidance"
+      - "User relying on system advice instead of seeking immediate help"
+      - "Misclassification of emergency symptoms as non-urgent"
+      - "Language barriers preventing understanding of emergency instructions"
+    risk_assessment:
+      probability: "low"
+      severity: "catastrophic"
+      risk_level: "high"
+    mitigation_strategies:
+      - "Keyword-based emergency detection with 100% sensitivity"
+      - "Prominent visual and textual emergency alerts"
+      - "Multiple language support for emergency instructions"
+      - "Direct integration with Taiwan emergency numbers"
+
+taiwan_emergency_context:
+  primary_emergency_number: "119"
+  secondary_numbers: ["110", "112", "113"]
+  escalation_protocol: |
+    緊急升級協議：
+    1. 系統檢測到危險症狀關鍵字
+    2. 立即顯示緊急警告（紅色背景）
+    3. 提供 119 撥打指示
+    4. 顯示最近急診室資訊
+    5. 記錄事件以供追蹤
+
+  emergency_triggers:
+    keywords:
+      # Traditional Chinese keywords
+      - "胸痛"
+      - "呼吸困難"
+      - "意識不清"
+      - "劇烈頭痛"
+      - "大量出血"
+      - "無法呼吸"
+      - "心臟病發"
+      - "中風"
+      - "昏迷"
+      - "休克"
+      # English keywords
+      - "chest pain"
+      - "difficulty breathing"
+      - "unconscious"
+      - "severe headache"
+      - "heavy bleeding"
+      - "cannot breathe"
+      - "heart attack"
+      - "stroke"
+      - "coma"
+      - "shock"
+    symptoms:
+      - "胸痛 + 冒冷汗"
+      - "呼吸困難 + 胸悶"
+      - "劇烈頭痛 + 嘔吐"
+      - "意識改變 + 任何症狀"
+    risk_factors:
+      - "年齡 > 65 歲"
+      - "已知心血管疾病"
+      - "糖尿病病史"
+      - "高血壓病史"
+
+safety_constraints:
+  must_not:
+    - "Never minimize or downplay emergency symptoms"
+    - "Never suggest 'wait and see' for emergency symptoms"
+    - "Never provide reassurance for emergency symptoms"
+    - "Never delay emergency guidance for data collection"
+  must_always:
+    - "Display emergency alert within 500ms of detection"
+    - "Include 119 emergency number prominently"
+    - "Provide bilingual emergency instructions"
+    - "Log emergency escalations for audit"
+  failsafe_behavior: |
+    If system is uncertain about symptom severity, always err on the side of
+    caution and provide emergency escalation guidance.
+
+medical_disclaimers:
+  required: true
+  content: |
+    ⚠️ 緊急醫療警告 ⚠️
+
+    您描述的症狀可能表示緊急醫療狀況。
+    請立即：
+    • 撥打 119 (救護車)
+    • 前往最近的急診室
+    • 如果您無法移動，請撥打 110 或 112
+
+    本系統不能替代專業醫療診斷。
+    在任何緊急情況下，請立即尋求醫療協助。
+
+    🚨 MEDICAL EMERGENCY WARNING 🚨
+
+    Your symptoms may indicate a medical emergency.
+    Immediately:
+    • Call 119 (ambulance)
+    • Go to nearest emergency room
+    • If unable to move, call 110 or 112
+
+    This system cannot replace professional medical diagnosis.
+    Seek immediate medical help for any emergency.
+
+compliance_requirements:
+  medical_device_classification: "N/A"
+  regulatory_standards:
+    - "Taiwan Emergency Medical Services Act"
+    - "Medical Care Act compliance"
+  audit_requirements:
+    - "Monthly review of emergency escalation logs"
+    - "Annual medical advisory board review"
+    - "Quarterly keyword effectiveness analysis"
+
+testing_requirements:
+  safety_tests:
+    emergency_response_tests:
+      - "test_emergency_keyword_detection_zh_tw"
+      - "test_emergency_keyword_detection_english"
+      - "test_emergency_alert_display_speed"
+      - "test_119_guidance_prominence"
+    failure_mode_tests:
+      - "test_system_down_emergency_fallback"
+      - "test_api_timeout_emergency_handling"
+      - "test_partial_keyword_match_sensitivity"
+    stress_tests:
+      - "test_concurrent_emergency_requests"
+      - "test_emergency_response_under_load"
+    boundary_tests:
+      - "test_borderline_emergency_symptoms"
+      - "test_multilingual_emergency_detection"
+
+  validation_criteria:
+    acceptance_tests:
+      - "100% detection rate for defined emergency keywords"
+      - "Emergency alert displayed within 500ms"
+      - "119 guidance visible in first screen view"
+      - "Bilingual emergency instructions present"
+    performance_benchmarks:
+      - "Zero false negatives for emergency symptoms"
+      - "Alert display latency < 500ms"
+      - "Emergency escalation logging 100% reliable"
+    user_acceptance:
+      - "Medical professional validation of emergency criteria"
+      - "User interface clarity testing with diverse demographics"
+
+monitoring:
+  safety_metrics:
+    - "Emergency escalation trigger rate"
+    - "False positive/negative rates"
+    - "Emergency alert response time"
+    - "User feedback on emergency guidance clarity"
+  alert_thresholds:
+    - "Emergency escalation rate > 10% triggers review"
+    - "Alert display time > 1000ms triggers investigation"
+    - "Any false negative escalates to medical team"
+  incident_response:
+    - "Immediate medical team notification for false negatives"
+    - "24-hour response window for emergency-related issues"
+    - "Weekly review of emergency escalation patterns"
+
+approval:
+  medical_review_required: true
+  safety_officer_approval: "Dr. Medical Safety Officer"
+  clinical_validation: "Emergency Medicine Specialist Review Required"
+  regulatory_sign_off: "Pending regulatory consultation"

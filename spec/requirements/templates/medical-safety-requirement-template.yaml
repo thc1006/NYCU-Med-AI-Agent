@@ -1,0 +1,102 @@
+# Medical Safety Requirement Template
+# For safety-critical medical features
+
+metadata:
+  id: "MS-{category}-{number}"  # e.g., MS-EMERGENCY-001
+  title: ""
+  description: ""
+  severity: ""  # critical, high, medium, low
+  category: ""  # emergency, triage, diagnosis, medication, etc.
+  taiwan_emergency_relevant: true
+  created_date: ""
+  updated_date: ""
+  status: ""
+
+safety_requirement:
+  description: |
+    Clear description of the safety requirement.
+    Must specify exact behavior for safety-critical scenarios.
+
+  safety_rationale: |
+    Medical/safety justification. Why this prevents harm.
+
+  hazard_analysis:
+    potential_hazards: []
+      # - List of potential medical hazards if requirement not met
+    risk_assessment:
+      probability: ""  # very_low, low, medium, high, very_high
+      severity: ""     # negligible, minor, moderate, major, catastrophic
+      risk_level: ""   # low, medium, high, very_high
+    mitigation_strategies: []
+      # - How we reduce risk
+
+taiwan_emergency_context:
+  primary_emergency_number: "119"  # Fire/ambulance
+  secondary_numbers: ["110", "112", "113"]
+  escalation_protocol: |
+    When to escalate to emergency services:
+    1. Life-threatening symptoms
+    2. Severe chest pain
+    3. Difficulty breathing
+    4. Loss of consciousness
+    5. Severe allergic reactions
+
+  emergency_triggers:
+    keywords: []
+      # - Symptom keywords that trigger immediate emergency response
+    symptoms: []
+      # - Symptom combinations that require 119
+    risk_factors: []
+      # - Patient factors that increase emergency likelihood
+
+safety_constraints:
+  # Absolute safety rules that cannot be violated
+  must_not: []
+    # - Things the system must never do
+  must_always: []
+    # - Things the system must always do
+  failsafe_behavior: ""
+    # - What happens when system fails
+
+medical_disclaimers:
+  required: true
+  content: |
+    本系統僅供一般資訊參考，不構成醫療診斷或治療建議。
+    緊急狀況請立即撥打 119 或前往最近急診室。
+    The system provides general information only, not medical diagnosis.
+    For emergencies, immediately call 119 or go to nearest emergency room.
+
+compliance_requirements:
+  medical_device_classification: ""  # Class I, II, III or N/A
+  regulatory_standards: []
+    # - Applicable medical/safety standards
+  audit_requirements: []
+    # - What must be audited for compliance
+
+testing_requirements:
+  safety_tests:
+    # Tests specifically for safety scenarios
+    emergency_response_tests: []
+    failure_mode_tests: []
+    stress_tests: []
+    boundary_tests: []
+
+  validation_criteria:
+    # How we prove the safety requirement is met
+    acceptance_tests: []
+    performance_benchmarks: []
+    user_acceptance: []
+
+monitoring:
+  safety_metrics: []
+    # - Metrics to monitor safety performance
+  alert_thresholds: []
+    # - When to trigger safety alerts
+  incident_response: []
+    # - How to handle safety incidents
+
+approval:
+  medical_review_required: true
+  safety_officer_approval: ""
+  clinical_validation: ""
+  regulatory_sign_off: ""

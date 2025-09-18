@@ -1,0 +1,63 @@
+{
+  "phase": "specification",
+  "timestamp": "2025-09-18T18:58:54.399Z",
+  "overall_status": "critical_failure",
+  "critical_failures": [
+    {
+      "rule": "emergency_procedures",
+      "severity": "critical",
+      "description": "Taiwan emergency services integration (119/112)",
+      "status": "failed",
+      "timestamp": "2025-09-18T18:58:54.400Z"
+    },
+    {
+      "rule": "privacy_compliance",
+      "severity": "critical",
+      "description": "Taiwan Personal Data Protection Act compliance",
+      "status": "failed",
+      "timestamp": "2025-09-18T18:58:54.400Z"
+    },
+    {
+      "rule": "medical_disclaimers",
+      "severity": "critical",
+      "description": "Medical disclaimers and professional advice guidance",
+      "status": "failed",
+      "timestamp": "2025-09-18T18:58:54.400Z"
+    }
+  ],
+  "high_failures": [],
+  "warnings": [],
+  "passed": [],
+  "compliance_status": {
+    "pdpa": {
+      "framework": "pdpa",
+      "name": "Personal Data Protection Act",
+      "authority": "National Development Council",
+      "status": "non_compliant",
+      "requirements_met": [],
+      "requirements_failed": [
+        "purpose_limitation",
+        "data_minimization",
+        "consent_mechanisms",
+        "retention_policies",
+        "cross_border_restrictions"
+      ],
+      "penalties": "Up to NT$50 million or 5% of annual turnover"
+    },
+    "mohw": {
+      "framework": "mohw",
+      "name": "Ministry of Health and Welfare Guidelines",
+      "authority": "Ministry of Health and Welfare",
+      "status": "non_compliant",
+      "requirements_met": [],
+      "requirements_failed": [
+        "medical_device_regulations",
+        "healthcare_data_standards",
+        "patient_safety_protocols",
+        "medical_professional_oversight"
+      ],
+      "penalties": "License suspension or revocation"
+    }
+  },
+  "safety_score": 0
+}

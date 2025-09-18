@@ -1,0 +1,99 @@
+# Functional Requirement Template
+# Use this template for all functional requirements
+
+metadata:
+  id: "FR-{category}-{number}"  # e.g., FR-TRIAGE-001
+  title: ""
+  description: ""
+  priority: ""  # critical, high, medium, low
+  category: ""  # triage, search, auth, emergency, etc.
+  taiwan_specific: false  # true if Taiwan-localized
+  medical_safety: false  # true if safety-critical
+  pdpa_relevant: false   # true if handles personal data
+  created_date: ""
+  updated_date: ""
+  status: ""  # draft, review, approved, implemented
+
+requirement:
+  description: |
+    Clear, unambiguous description of what the system shall do.
+    Use "shall" for mandatory requirements, "should" for desired.
+
+  rationale: |
+    Why this requirement exists. Business/medical justification.
+
+  assumptions: []
+    # - List of assumptions this requirement depends on
+
+  constraints: []
+    # - Technical, business, or regulatory constraints
+
+  dependencies: []
+    # - Other requirements this depends on (by ID)
+
+acceptance_criteria:
+  # Use Gherkin-style Given/When/Then format
+  scenarios:
+    - id: "AC-{req-id}-001"
+      title: "Normal flow"
+      given: |
+        Preconditions for this scenario
+      when: |
+        Actions taken by user/system
+      then: |
+        Expected outcomes
+
+    - id: "AC-{req-id}-002"
+      title: "Error handling"
+      given: |
+        Error condition setup
+      when: |
+        Error trigger action
+      then: |
+        Expected error handling behavior
+
+  performance_criteria:
+    response_time: ""  # e.g., "< 200ms for 95% of requests"
+    throughput: ""     # e.g., "1000 concurrent users"
+    availability: ""   # e.g., "99.9% uptime"
+
+taiwan_localization:
+  language: "zh-TW"
+  region: "TW"
+  emergency_numbers: ["119", "110", "112", "113", "165"]
+  cultural_considerations: []
+  regulatory_requirements: []
+
+medical_safety:
+  risk_level: ""  # low, medium, high, critical
+  safety_measures: []
+  escalation_triggers: []
+  disclaimer_required: true
+
+compliance:
+  pdpa_classification: ""  # none, personal, sensitive, medical
+  data_minimization: true
+  consent_required: false
+  retention_period: ""
+
+testing:
+  unit_tests: []
+    # - List of unit tests needed
+  integration_tests: []
+    # - List of integration tests needed
+  e2e_tests: []
+    # - List of end-to-end tests needed
+  manual_tests: []
+    # - List of manual test scenarios
+
+implementation:
+  estimated_effort: ""  # story points or hours
+  technical_approach: ""
+  files_affected: []
+  apis_affected: []
+
+validation:
+  reviewed_by: ""
+  approved_by: ""
+  review_notes: ""
+  validation_date: ""
