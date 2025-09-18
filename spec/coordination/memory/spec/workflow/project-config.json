@@ -1,0 +1,23 @@
+{
+  "name": "demo-medical-ai",
+  "type": "medical-ai",
+  "localization": "taiwan",
+  "sparc_version": "1.0.0",
+  "medical_safety": {
+    "enabled": true,
+    "emergency_procedures": [
+      "119",
+      "112"
+    ],
+    "compliance_frameworks": [
+      "pdpa",
+      "mohw"
+    ]
+  },
+  "phases": {
+    "current": "specification",
+    "completed": [],
+    "blocked": []
+  },
+  "initialized": "2025-09-18T18:57:13.870Z"
+}

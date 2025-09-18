@@ -1,0 +1,412 @@
+{
+  "workflow": {
+    "name": "Taiwan Medical AI Agent SPARC Development",
+    "version": "1.0.0",
+    "description": "Systematic development workflow for Taiwan-localized medical assistant with symptom analysis and hospital search",
+    "phases": [
+      {
+        "name": "specification",
+        "title": "Requirements Specification",
+        "description": "Detailed requirements gathering for Taiwan medical AI system",
+        "medicalSafety": {
+          "required": ["emergency_procedures", "privacy_compliance", "medical_disclaimers"],
+          "validation": {
+            "emergency_procedures": "Must include 119/112 emergency contact integration",
+            "privacy_compliance": "Must comply with Taiwan PDPA regulations",
+            "medical_disclaimers": "Must include appropriate medical disclaimers"
+          }
+        },
+        "deliverables": [
+          {
+            "name": "requirements.md",
+            "description": "Complete functional and non-functional requirements",
+            "template": "spec/coordination/templates/requirements-template.md"
+          },
+          {
+            "name": "user-stories.md",
+            "description": "User stories for Taiwan medical scenarios",
+            "template": "spec/coordination/templates/user-stories-template.md"
+          },
+          {
+            "name": "acceptance-criteria.md",
+            "description": "Acceptance criteria with medical safety validation",
+            "template": "spec/coordination/templates/acceptance-criteria-template.md"
+          },
+          {
+            "name": "taiwan-localization-spec.md",
+            "description": "Taiwan-specific requirements (language, regulations, emergency services)",
+            "template": "spec/coordination/templates/taiwan-localization-template.md"
+          }
+        ],
+        "agents": [
+          {
+            "type": "researcher",
+            "role": "Medical domain research and Taiwan healthcare system analysis",
+            "coordination": "primary"
+          },
+          {
+            "type": "planner",
+            "role": "Project planning and phase coordination",
+            "coordination": "secondary"
+          },
+          {
+            "type": "system-architect",
+            "role": "High-level system requirements and constraints",
+            "coordination": "secondary"
+          }
+        ],
+        "qualityGates": [
+          {
+            "name": "medical_safety_review",
+            "description": "Review all medical safety requirements",
+            "criteria": ["emergency_integration", "disclaimer_coverage", "professional_guidance"]
+          },
+          {
+            "name": "taiwan_compliance",
+            "description": "Verify Taiwan regulatory compliance",
+            "criteria": ["pdpa_compliance", "mohw_guidelines", "emergency_services"]
+          },
+          {
+            "name": "completeness_check",
+            "description": "Ensure all requirements are documented",
+            "criteria": ["functional_coverage", "non_functional_coverage", "edge_cases"]
+          }
+        ],
+        "estimatedHours": 16,
+        "dependencies": []
+      },
+      {
+        "name": "pseudocode",
+        "title": "Algorithm Design",
+        "description": "Design algorithms for symptom analysis and hospital search",
+        "medicalSafety": {
+          "required": ["algorithm_safety", "error_handling", "failsafe_mechanisms"],
+          "validation": {
+            "algorithm_safety": "Algorithms must have defined error bounds and validation logic",
+            "error_handling": "Must include graceful degradation for medical scenarios",
+            "failsafe_mechanisms": "Must have circuit breakers and safe defaults"
+          }
+        },
+        "deliverables": [
+          {
+            "name": "symptom-analysis-algorithm.md",
+            "description": "Pseudocode for symptom analysis and risk assessment",
+            "template": "spec/coordination/templates/algorithm-template.md"
+          },
+          {
+            "name": "hospital-search-algorithm.md",
+            "description": "Pseudocode for nearby hospital search with Taiwan localization",
+            "template": "spec/coordination/templates/algorithm-template.md"
+          },
+          {
+            "name": "safety-logic-design.md",
+            "description": "Safety mechanisms and emergency escalation logic",
+            "template": "spec/coordination/templates/safety-logic-template.md"
+          },
+          {
+            "name": "data-structures.md",
+            "description": "Data structures for medical data and hospital information",
+            "template": "spec/coordination/templates/data-structures-template.md"
+          }
+        ],
+        "agents": [
+          {
+            "type": "sparc-coder",
+            "role": "Algorithm design and pseudocode development",
+            "coordination": "primary"
+          },
+          {
+            "type": "reviewer",
+            "role": "Algorithm review and safety validation",
+            "coordination": "secondary"
+          },
+          {
+            "type": "ml-developer",
+            "role": "Machine learning algorithm design (if applicable)",
+            "coordination": "secondary"
+          }
+        ],
+        "qualityGates": [
+          {
+            "name": "algorithm_correctness",
+            "description": "Verify algorithm correctness and efficiency",
+            "criteria": ["logic_validation", "complexity_analysis", "edge_case_handling"]
+          },
+          {
+            "name": "safety_mechanisms",
+            "description": "Validate safety and failsafe mechanisms",
+            "criteria": ["error_boundaries", "graceful_degradation", "emergency_escalation"]
+          },
+          {
+            "name": "medical_validation",
+            "description": "Medical professional review of algorithms",
+            "criteria": ["clinical_accuracy", "safety_protocols", "professional_guidelines"]
+          }
+        ],
+        "estimatedHours": 20,
+        "dependencies": ["specification"]
+      },
+      {
+        "name": "architecture",
+        "title": "System Architecture",
+        "description": "Design system architecture for Taiwan medical AI platform",
+        "medicalSafety": {
+          "required": ["data_security", "compliance_framework", "audit_logging"],
+          "validation": {
+            "data_security": "Must implement encryption and access controls for medical data",
+            "compliance_framework": "Must support audit trails and regulatory compliance",
+            "audit_logging": "Must log all medical interactions and security events"
+          }
+        },
+        "deliverables": [
+          {
+            "name": "system-architecture.md",
+            "description": "Overall system architecture and component design",
+            "template": "spec/coordination/templates/architecture-template.md"
+          },
+          {
+            "name": "api-specification.md",
+            "description": "API design for medical services and hospital search",
+            "template": "spec/coordination/templates/api-spec-template.md"
+          },
+          {
+            "name": "security-architecture.md",
+            "description": "Security framework and data protection measures",
+            "template": "spec/coordination/templates/security-template.md"
+          },
+          {
+            "name": "deployment-architecture.md",
+            "description": "Deployment strategy and infrastructure requirements",
+            "template": "spec/coordination/templates/deployment-template.md"
+          }
+        ],
+        "agents": [
+          {
+            "type": "system-architect",
+            "role": "Overall system architecture design",
+            "coordination": "primary"
+          },
+          {
+            "type": "backend-dev",
+            "role": "Backend architecture and API design",
+            "coordination": "secondary"
+          },
+          {
+            "type": "security-manager",
+            "role": "Security architecture and compliance framework",
+            "coordination": "secondary"
+          },
+          {
+            "type": "cicd-engineer",
+            "role": "Deployment and infrastructure architecture",
+            "coordination": "secondary"
+          }
+        ],
+        "qualityGates": [
+          {
+            "name": "scalability_review",
+            "description": "Review system scalability and performance",
+            "criteria": ["load_handling", "response_times", "resource_efficiency"]
+          },
+          {
+            "name": "security_audit",
+            "description": "Security architecture audit",
+            "criteria": ["data_encryption", "access_controls", "vulnerability_assessment"]
+          },
+          {
+            "name": "compliance_validation",
+            "description": "Regulatory compliance validation",
+            "criteria": ["pdpa_compliance", "medical_regulations", "audit_capabilities"]
+          }
+        ],
+        "estimatedHours": 24,
+        "dependencies": ["specification", "pseudocode"]
+      },
+      {
+        "name": "refinement",
+        "title": "TDD Implementation",
+        "description": "Test-driven development with medical safety focus",
+        "medicalSafety": {
+          "required": ["tdd_medical_scenarios", "safety_tests", "edge_case_handling"],
+          "validation": {
+            "tdd_medical_scenarios": "Must include comprehensive medical scenario testing",
+            "safety_tests": "Must test all safety mechanisms and emergency procedures",
+            "edge_case_handling": "Must handle boundary conditions and error scenarios"
+          }
+        },
+        "deliverables": [
+          {
+            "name": "test-suite",
+            "description": "Comprehensive test suite with medical scenarios",
+            "path": "tests/"
+          },
+          {
+            "name": "source-code",
+            "description": "Production-ready source code with safety mechanisms",
+            "path": "app/"
+          },
+          {
+            "name": "integration-tests",
+            "description": "Integration tests for medical workflows",
+            "path": "tests/integration/"
+          },
+          {
+            "name": "safety-validation-tests",
+            "description": "Specific tests for medical safety validation",
+            "path": "tests/safety/"
+          }
+        ],
+        "agents": [
+          {
+            "type": "tdd-london-swarm",
+            "role": "Test-driven development coordination",
+            "coordination": "primary"
+          },
+          {
+            "type": "coder",
+            "role": "Implementation of core features",
+            "coordination": "secondary"
+          },
+          {
+            "type": "tester",
+            "role": "Test development and validation",
+            "coordination": "secondary"
+          },
+          {
+            "type": "reviewer",
+            "role": "Code review and quality assurance",
+            "coordination": "secondary"
+          }
+        ],
+        "qualityGates": [
+          {
+            "name": "test_coverage",
+            "description": "Ensure adequate test coverage",
+            "criteria": ["unit_test_coverage", "integration_coverage", "safety_test_coverage"],
+            "thresholds": {
+              "unit_test_coverage": ">=90%",
+              "integration_coverage": ">=80%",
+              "safety_test_coverage": "100%"
+            }
+          },
+          {
+            "name": "code_quality",
+            "description": "Code quality and maintainability",
+            "criteria": ["code_complexity", "documentation", "code_standards"]
+          },
+          {
+            "name": "medical_safety_validation",
+            "description": "Validate all medical safety mechanisms",
+            "criteria": ["emergency_procedures", "error_handling", "data_protection"]
+          }
+        ],
+        "estimatedHours": 40,
+        "dependencies": ["specification", "pseudocode", "architecture"]
+      },
+      {
+        "name": "completion",
+        "title": "Integration & Deployment",
+        "description": "Final integration testing and deployment preparation",
+        "medicalSafety": {
+          "required": ["deployment_safety", "monitoring_alerts", "incident_response"],
+          "validation": {
+            "deployment_safety": "Must include blue-green deployment and rollback strategy",
+            "monitoring_alerts": "Must monitor health checks and error alerts",
+            "incident_response": "Must have escalation procedures and recovery plans"
+          }
+        },
+        "deliverables": [
+          {
+            "name": "deployment-config",
+            "description": "Production deployment configuration",
+            "path": "deployment/"
+          },
+          {
+            "name": "monitoring-setup",
+            "description": "Monitoring and alerting configuration",
+            "path": "monitoring/"
+          },
+          {
+            "name": "documentation",
+            "description": "Complete system documentation",
+            "path": "docs/"
+          },
+          {
+            "name": "runbook",
+            "description": "Operational runbook for medical AI system",
+            "path": "docs/operations/"
+          }
+        ],
+        "agents": [
+          {
+            "type": "production-validator",
+            "role": "Production readiness validation",
+            "coordination": "primary"
+          },
+          {
+            "type": "cicd-engineer",
+            "role": "Deployment pipeline and infrastructure",
+            "coordination": "secondary"
+          },
+          {
+            "type": "reviewer",
+            "role": "Final review and documentation",
+            "coordination": "secondary"
+          }
+        ],
+        "qualityGates": [
+          {
+            "name": "production_readiness",
+            "description": "Validate production readiness",
+            "criteria": ["performance_benchmarks", "scalability_tests", "security_validation"]
+          },
+          {
+            "name": "monitoring_validation",
+            "description": "Validate monitoring and alerting",
+            "criteria": ["health_checks", "error_alerts", "performance_metrics"]
+          },
+          {
+            "name": "documentation_completeness",
+            "description": "Ensure complete documentation",
+            "criteria": ["user_documentation", "technical_documentation", "operational_runbook"]
+          }
+        ],
+        "estimatedHours": 16,
+        "dependencies": ["specification", "pseudocode", "architecture", "refinement"]
+      }
+    ],
+    "medicalSafetyFramework": {
+      "principles": [
+        "Patient safety is paramount",
+        "Emergency procedures must be accessible",
+        "Medical disclaimers must be prominent",
+        "Data privacy must be protected",
+        "Professional medical advice must be recommended"
+      ],
+      "emergencyProcedures": {
+        "taiwan": {
+          "primary": "119",
+          "mobile": "112",
+          "description": "Taiwan emergency services integration"
+        }
+      },
+      "complianceFramework": {
+        "pdpa": "Taiwan Personal Data Protection Act",
+        "mohw": "Ministry of Health and Welfare guidelines",
+        "nhi": "National Health Insurance regulations"
+      }
+    },
+    "coordination": {
+      "hooks": {
+        "preTask": "Medical safety validation",
+        "postTask": "Phase completion verification",
+        "notify": "Phase transition notifications"
+      },
+      "memory": {
+        "namespace": "spec/workflow/phases",
+        "persistence": "permanent",
+        "structure": "hierarchical"
+      }
+    }
+  }
+}

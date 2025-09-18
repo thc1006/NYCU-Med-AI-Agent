@@ -1,0 +1,872 @@
+openapi: 3.0.3
+info:
+  title: Taiwan Medical AI Agent API
+  description: |
+    Taiwan-localized medical AI assistant providing symptom triage and hospital location services.
+
+    **Important Medical Disclaimer**:
+    This API provides general health information only and cannot replace professional medical diagnosis or treatment.
+    For medical emergencies, please call 119 (Fire/Ambulance) or 112 (International Emergency).
+
+    **Privacy Notice**:
+    This service complies with Taiwan's Personal Data Protection Act (PDPA).
+    Personal medical information is not stored and is processed according to data minimization principles.
+  version: 1.0.0
+  contact:
+    name: Taiwan Medical AI Agent Support
+    email: support@taiwan-med-ai.com
+    url: https://taiwan-med-ai.com/support
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: https://taiwan-med-ai.com/terms
+
+servers:
+  - url: https://api.taiwan-med-ai.com/v1
+    description: Production server
+  - url: https://staging-api.taiwan-med-ai.com/v1
+    description: Staging server
+  - url: http://localhost:8000/v1
+    description: Development server
+
+security:
+  - apiKeyAuth: []
+  - bearerAuth: []
+
+paths:
+  /healthz:
+    get:
+      summary: Health Check
+      description: Basic health check endpoint for service monitoring
+      operationId: healthCheck
+      tags:
+        - Health
+      security: []
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthStatus'
+              example:
+                status: "ok"
+                timestamp: "2024-01-20T10:30:00+08:00"
+                version: "1.0.0"
+                environment: "production"
+
+  /v1/meta/emergency:
+    get:
+      summary: Taiwan Emergency Contacts
+      description: Get Taiwan emergency contact numbers and information
+      operationId: getEmergencyContacts
+      tags:
+        - Meta
+      security: []
+      responses:
+        '200':
+          description: Emergency contact information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmergencyInfo'
+
+  /v1/triage:
+    post:
+      summary: Medical Symptom Triage
+      description: |
+        Analyze symptoms and provide medical guidance with Taiwan-specific emergency protocols.
+
+        **Safety Features**:
+        - Emergency symptoms trigger immediate 119 guidance
+        - All responses include medical disclaimers
+        - No diagnostic claims, only guidance and recommendations
+      operationId: triageSymptoms
+      tags:
+        - Medical
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriageRequest'
+            example:
+              symptomText: "頭痛且發燒"
+              patientAge: 35
+              patientGender: "female"
+              preferences:
+                includeEmergencyInfo: true
+                includeSelfCareAdvice: true
+      responses:
+        '200':
+          description: Triage analysis completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriageResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v1/hospitals/nearby:
+    get:
+      summary: Find Nearby Hospitals
+      description: |
+        Search for nearby hospitals and medical facilities using Google Places API with Taiwan localization.
+
+        **Features**:
+        - Traditional Chinese (zh-TW) results
+        - Taiwan National Health Insurance (NHIA) verification
+        - Emergency department availability
+        - Distance-based sorting
+      operationId: findNearbyHospitals
+      tags:
+        - Location
+      parameters:
+        - name: lat
+          in: query
+          description: Latitude coordinate
+          schema:
+            type: number
+            format: float
+            minimum: 21.5
+            maximum: 26.5
+          example: 25.0339
+        - name: lng
+          in: query
+          description: Longitude coordinate
+          schema:
+            type: number
+            format: float
+            minimum: 119.5
+            maximum: 122.5
+          example: 121.5645
+        - name: address
+          in: query
+          description: Address to geocode (alternative to lat/lng)
+          schema:
+            type: string
+            maxLength: 200
+          example: "台北市信義區市府路1號"
+        - name: radius
+          in: query
+          description: Search radius in meters
+          schema:
+            type: integer
+            minimum: 500
+            maximum: 10000
+            default: 3000
+          example: 5000
+        - name: useIpLocation
+          in: query
+          description: Use IP-based location detection
+          schema:
+            type: boolean
+            default: false
+        - name: includeEmergency
+          in: query
+          description: Include only hospitals with emergency departments
+          schema:
+            type: boolean
+            default: false
+        - name: maxResults
+          in: query
+          description: Maximum number of results
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 20
+      responses:
+        '200':
+          description: Hospital search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HospitalSearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v1/geocoding/address:
+    post:
+      summary: Geocode Address
+      description: Convert Taiwan address to coordinates using Google Geocoding API
+      operationId: geocodeAddress
+      tags:
+        - Location
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GeocodingRequest'
+            example:
+              address: "台北市信義區市府路1號"
+              language: "zh-TW"
+              region: "TW"
+      responses:
+        '200':
+          description: Geocoding successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeocodingResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for authentication
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for authentication
+
+  schemas:
+    HealthStatus:
+      type: object
+      required:
+        - status
+        - timestamp
+        - version
+      properties:
+        status:
+          type: string
+          enum: [ok, degraded, error]
+          description: Service health status
+        timestamp:
+          type: string
+          format: date-time
+          description: Current server timestamp
+        version:
+          type: string
+          description: API version
+        environment:
+          type: string
+          enum: [development, staging, production]
+          description: Deployment environment
+
+    EmergencyContact:
+      type: object
+      required:
+        - number
+        - description
+        - category
+        - available24h
+      properties:
+        number:
+          type: string
+          description: Emergency phone number
+          example: "119"
+        description:
+          type: string
+          description: Service description in Traditional Chinese
+          example: "消防救護車"
+        category:
+          type: string
+          enum: [medical_emergency, police, international_emergency, protection, fraud_prevention]
+          description: Emergency service category
+        available24h:
+          type: boolean
+          description: Whether service is available 24/7
+        note:
+          type: string
+          description: Additional information
+          example: "無卡亦可撥打"
+
+    EmergencyInfo:
+      type: object
+      required:
+        - emergencyNumbers
+        - updatedAt
+        - locale
+      properties:
+        emergencyNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmergencyContact'
+          description: List of Taiwan emergency contacts
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        locale:
+          type: string
+          enum: [zh-TW]
+          description: Response language locale
+
+    TriageRequest:
+      type: object
+      required:
+        - symptomText
+      properties:
+        symptomText:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          description: Patient's symptom description in Traditional Chinese
+          example: "頭痛且發燒"
+        patientAge:
+          type: integer
+          minimum: 0
+          maximum: 120
+          description: Patient age in years
+        patientGender:
+          type: string
+          enum: [male, female, other, not_specified]
+          description: Patient gender
+        preferences:
+          $ref: '#/components/schemas/TriagePreferences'
+
+    TriagePreferences:
+      type: object
+      properties:
+        includeEmergencyInfo:
+          type: boolean
+          default: true
+          description: Include emergency contact information
+        includeSelfCareAdvice:
+          type: boolean
+          default: true
+          description: Include self-care recommendations
+        preferredLanguage:
+          type: string
+          enum: [zh-TW]
+          default: zh-TW
+          description: Preferred response language
+
+    TriageResponse:
+      type: object
+      required:
+        - requestId
+        - level
+        - severity
+        - advice
+        - nextSteps
+        - emergencyContacts
+        - disclaimer
+        - timestamp
+        - locale
+      properties:
+        requestId:
+          type: string
+          description: Unique request identifier
+          example: "triage_123456789"
+        level:
+          type: string
+          enum: [emergency, urgent, routine, self_care]
+          description: Triage level classification
+        severity:
+          type: string
+          enum: [critical, high, moderate, mild]
+          description: Symptom severity assessment
+        advice:
+          type: string
+          description: Medical guidance in Traditional Chinese
+          example: "建議多休息並觀察症狀變化"
+        nextSteps:
+          type: array
+          items:
+            type: string
+          description: Recommended next actions
+        selfCareAdvice:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfCareAdvice'
+          description: Self-care recommendations (if applicable)
+        warningSignsToSeekCare:
+          type: array
+          items:
+            type: string
+          description: Warning signs that require medical attention
+        emergencyContacts:
+          type: array
+          items:
+            type: string
+          description: Relevant emergency contact numbers
+          example: ["119", "112"]
+        disclaimer:
+          type: string
+          description: Medical disclaimer in Traditional Chinese
+        timestamp:
+          type: string
+          format: date-time
+          description: Response timestamp
+        locale:
+          type: string
+          enum: [zh-TW]
+          description: Response language
+
+    SelfCareAdvice:
+      type: object
+      required:
+        - category
+        - advice
+      properties:
+        category:
+          type: string
+          enum: [rest, hydration, medication, monitoring, lifestyle]
+          description: Self-care category
+        advice:
+          type: string
+          description: Specific self-care recommendation
+          example: "每日睡眠8小時以上"
+
+    Location:
+      type: object
+      required:
+        - latitude
+        - longitude
+      properties:
+        latitude:
+          type: number
+          format: float
+          minimum: -90
+          maximum: 90
+          description: Latitude coordinate
+        longitude:
+          type: number
+          format: float
+          minimum: -180
+          maximum: 180
+          description: Longitude coordinate
+
+    Hospital:
+      type: object
+      required:
+        - placeId
+        - name
+        - address
+        - location
+        - distance
+      properties:
+        placeId:
+          type: string
+          description: Google Places unique identifier
+        name:
+          type: string
+          description: Hospital name in Traditional Chinese
+          example: "臺大醫院"
+        address:
+          type: string
+          description: Hospital address
+          example: "台北市中正區中山南路7號"
+        formattedAddress:
+          type: string
+          description: Google-formatted address
+          example: "100台北市中正區中山南路7號"
+        location:
+          $ref: '#/components/schemas/Location'
+        distance:
+          type: integer
+          description: Distance from search point in meters
+          example: 820
+        phone:
+          type: string
+          description: Hospital phone number
+          example: "+886-2-2312-3456"
+        website:
+          type: string
+          format: uri
+          description: Hospital website URL
+        rating:
+          type: number
+          format: float
+          minimum: 1
+          maximum: 5
+          description: Google rating (1-5 stars)
+        userRatingsTotal:
+          type: integer
+          description: Number of user ratings
+        emergencyDepartment:
+          $ref: '#/components/schemas/EmergencyDepartment'
+        nhiaContracted:
+          type: boolean
+          description: Whether hospital is contracted with Taiwan NHIA
+        nhiaCode:
+          type: string
+          description: NHIA institution code
+          example: "0501140010"
+        departments:
+          type: array
+          items:
+            type: string
+          description: Available medical departments
+        openingHours:
+          $ref: '#/components/schemas/OpeningHours'
+
+    EmergencyDepartment:
+      type: object
+      properties:
+        available:
+          type: boolean
+          description: Emergency department availability
+        hours:
+          type: string
+          description: Emergency department hours
+          example: "24小時"
+        phone:
+          type: string
+          description: Emergency department phone
+
+    OpeningHours:
+      type: object
+      properties:
+        periods:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningPeriod'
+        weekdayText:
+          type: array
+          items:
+            type: string
+          description: Human-readable opening hours
+          example: ["星期一: 24 小時營業"]
+
+    OpeningPeriod:
+      type: object
+      properties:
+        open:
+          $ref: '#/components/schemas/OpeningTime'
+        close:
+          $ref: '#/components/schemas/OpeningTime'
+
+    OpeningTime:
+      type: object
+      properties:
+        day:
+          type: integer
+          minimum: 0
+          maximum: 6
+          description: Day of week (0=Sunday)
+        time:
+          type: string
+          pattern: '^[0-2][0-9][0-5][0-9]$'
+          description: Time in HHMM format
+          example: "0900"
+
+    HospitalSearchResponse:
+      type: object
+      required:
+        - requestId
+        - searchCriteria
+        - results
+        - emergencyContacts
+        - disclaimer
+        - timestamp
+        - locale
+      properties:
+        requestId:
+          type: string
+          description: Unique request identifier
+        searchCriteria:
+          $ref: '#/components/schemas/SearchCriteria'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Hospital'
+          description: List of nearby hospitals
+        emergencyContacts:
+          type: array
+          items:
+            type: string
+          description: Emergency contact numbers
+        disclaimer:
+          type: string
+          description: Hospital information disclaimer
+        timestamp:
+          type: string
+          format: date-time
+        locale:
+          type: string
+          enum: [zh-TW]
+
+    SearchCriteria:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        radius:
+          type: integer
+          description: Search radius in meters
+        includeEmergencyOnly:
+          type: boolean
+          description: Whether search included emergency departments only
+
+    GeocodingRequest:
+      type: object
+      required:
+        - address
+      properties:
+        address:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Taiwan address to geocode
+          example: "台北市信義區市府路1號"
+        language:
+          type: string
+          enum: [zh-TW]
+          default: zh-TW
+          description: Response language
+        region:
+          type: string
+          enum: [TW]
+          default: TW
+          description: Region bias for results
+
+    GeocodingResponse:
+      type: object
+      required:
+        - requestId
+        - results
+        - status
+        - timestamp
+        - locale
+      properties:
+        requestId:
+          type: string
+          description: Unique request identifier
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeocodingResult'
+        status:
+          type: string
+          enum: [OK, ZERO_RESULTS, INVALID_REQUEST, REQUEST_DENIED]
+          description: Geocoding operation status
+        timestamp:
+          type: string
+          format: date-time
+        locale:
+          type: string
+          enum: [zh-TW]
+
+    GeocodingResult:
+      type: object
+      required:
+        - formattedAddress
+        - location
+        - locationType
+        - types
+      properties:
+        formattedAddress:
+          type: string
+          description: Google-formatted address
+          example: "110台北市信義區市府路1號"
+        location:
+          $ref: '#/components/schemas/Location'
+        locationType:
+          type: string
+          enum: [ROOFTOP, RANGE_INTERPOLATED, GEOMETRIC_CENTER, APPROXIMATE]
+          description: Location precision type
+        types:
+          type: array
+          items:
+            type: string
+          description: Address component types
+        addressComponents:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressComponent'
+
+    AddressComponent:
+      type: object
+      required:
+        - longName
+        - shortName
+        - types
+      properties:
+        longName:
+          type: string
+          description: Full component name
+        shortName:
+          type: string
+          description: Abbreviated component name
+        types:
+          type: array
+          items:
+            type: string
+          description: Component type identifiers
+
+    ApiError:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorDetail'
+
+    ErrorDetail:
+      type: object
+      required:
+        - code
+        - message
+        - timestamp
+        - requestId
+      properties:
+        code:
+          type: string
+          description: Error code identifier
+          example: "INVALID_LOCATION"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "無法識別提供的地址或座標"
+        details:
+          type: string
+          description: Additional error details
+        timestamp:
+          type: string
+          format: date-time
+          description: Error occurrence timestamp
+        requestId:
+          type: string
+          description: Request identifier for tracking
+        suggestion:
+          type: string
+          description: Suggested resolution
+          example: "請提供完整的台灣地址或有效的經緯度座標"
+
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            error:
+              code: "INVALID_REQUEST"
+              message: "請求格式錯誤"
+              timestamp: "2024-01-20T10:30:00+08:00"
+              requestId: "req_123456789"
+
+    ValidationError:
+      description: Validation error - request data invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            error:
+              code: "VALIDATION_ERROR"
+              message: "請求資料驗證失敗"
+              details: "symptomText 欄位不得為空"
+              timestamp: "2024-01-20T10:30:00+08:00"
+              requestId: "req_123456789"
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            error:
+              code: "RESOURCE_NOT_FOUND"
+              message: "找不到指定的資源"
+              timestamp: "2024-01-20T10:30:00+08:00"
+              requestId: "req_123456789"
+
+    RateLimit:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Limit:
+          schema:
+            type: integer
+          description: Request limit per hour
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+          description: Remaining requests in current window
+        X-RateLimit-Reset:
+          schema:
+            type: integer
+          description: Time when rate limit resets (Unix timestamp)
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retry
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            error:
+              code: "RATE_LIMIT_EXCEEDED"
+              message: "請求頻率超過限制"
+              timestamp: "2024-01-20T10:30:00+08:00"
+              requestId: "req_123456789"
+              suggestion: "請稍後再試或升級您的API方案"
+
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            error:
+              code: "INTERNAL_ERROR"
+              message: "內部伺服器錯誤"
+              timestamp: "2024-01-20T10:30:00+08:00"
+              requestId: "req_123456789"
+              suggestion: "請稍後再試，如問題持續請聯絡技術支援"
+
+  headers:
+    X-Request-ID:
+      description: Unique request identifier for tracking
+      schema:
+        type: string
+        format: uuid
+    X-RateLimit-Limit:
+      description: Request limit per time window
+      schema:
+        type: integer
+    X-RateLimit-Remaining:
+      description: Remaining requests in current window
+      schema:
+        type: integer
+    X-RateLimit-Reset:
+      description: Time when rate limit resets
+      schema:
+        type: integer
+
+tags:
+  - name: Health
+    description: Service health and monitoring endpoints
+  - name: Meta
+    description: Metadata and configuration endpoints
+  - name: Medical
+    description: Medical triage and health guidance
+  - name: Location
+    description: Geocoding and hospital location services
+
+externalDocs:
+  description: Taiwan Medical AI Agent Documentation
+  url: https://docs.taiwan-med-ai.com

@@ -1,0 +1,268 @@
+# PDPA Compliance Requirement Template
+# For Personal Data Protection Act compliance requirements
+
+metadata:
+  id: "PDPA-{category}-{number}"  # e.g., PDPA-COLLECT-001
+  title: ""
+  description: ""
+  priority: "high"  # PDPA compliance is typically high priority
+  category: ""  # collect, process, use, transfer, store, delete
+  pdpa_relevant: true
+  created_date: ""
+  updated_date: ""
+  status: ""
+
+pdpa_requirement:
+  description: |
+    Clear description of personal data handling requirement.
+    Must specify exact PDPA compliance measures.
+
+  legal_basis: |
+    Legal basis for personal data collection/processing under PDPA.
+    Reference specific PDPA articles.
+
+pdpa_compliance:
+  data_classification:
+    type: ""  # general, sensitive, special, medical
+    categories: []
+      # - "身分證字號"
+      # - "手機號碼"
+      # - "電子郵件"
+      # - "健康狀況"
+      # - "病歷資料"
+
+  collection_principles:
+    specific_purpose: ""
+    necessary_scope: true
+    lawful_means: true
+    consent_required: false
+
+    purpose_statement: |
+      Specific purpose for collecting personal data.
+      Must be clear and understandable to data subjects.
+
+  processing_limitations:
+    purpose_limitation: true
+    data_minimization: true
+    accuracy_requirement: true
+    retention_limitation: true
+
+    processing_conditions: []
+      # - Legal obligation
+      # - Consent
+      # - Legitimate interest
+      # - Vital interest
+
+  data_subject_rights:
+    access_right: true
+    rectification_right: true
+    deletion_right: true
+    portability_right: false
+    objection_right: true
+
+    rights_implementation:
+      access_method: ""
+      response_timeframe: "15 days"
+      verification_process: ""
+
+taiwan_pdpa_specifics:
+  applicable_articles:
+    - article: "第5條"
+      content: "個人資料蒐集之限制"
+    - article: "第6條"
+      content: "個人資料蒐集之告知"
+    - article: "第8條"
+      content: "蒐集非由當事人提供之個人資料"
+    - article: "第20條"
+      content: "個人資料利用之限制"
+
+  notification_requirements:
+    collection_notice: true
+    notice_content:
+      - "蒐集機關名稱"
+      - "蒐集目的"
+      - "個人資料類別"
+      - "個人資料來源"
+      - "個人資料利用期間、地區、對象及方式"
+      - "當事人依法得行使之權利及方式"
+      - "當事人不提供個人資料時，對其權益之影響"
+
+  special_categories:
+    medical_data:
+      extra_protection: true
+      consent_required: true
+      purpose_limitation: "medical_treatment_only"
+
+    sensitive_data:
+      - "病歷"
+      - "醫療紀錄"
+      - "健康檢查資料"
+      - "基因資訊"
+
+security_requirements:
+  technical_safeguards:
+    encryption_at_rest: true
+    encryption_in_transit: true
+    access_controls: true
+    audit_logging: true
+
+  organizational_safeguards:
+    staff_training: true
+    privacy_policies: true
+    incident_response: true
+    vendor_management: true
+
+  specific_measures:
+    - "資料存取權限控制"
+    - "個資存取紀錄"
+    - "資料傳輸加密"
+    - "資料庫加密"
+    - "定期安全檢測"
+
+data_lifecycle_management:
+  collection:
+    lawful_basis_verification: true
+    consent_mechanism: ""
+    notice_provision: true
+
+  storage:
+    retention_period: ""
+    storage_location: "Taiwan"
+    backup_procedures: ""
+
+  use:
+    purpose_compliance: true
+    access_logging: true
+    usage_monitoring: true
+
+  transfer:
+    international_transfer: false
+    adequacy_decision: ""
+    safeguards_applied: ""
+
+  deletion:
+    retention_schedule: ""
+    secure_deletion: true
+    deletion_verification: true
+
+medical_data_specifics:
+  health_information:
+    classification: "special_category"
+    extra_consent: true
+    medical_purpose_only: true
+
+  patient_records:
+    retention_period: "依醫療法規定"
+    access_restrictions: "醫療人員限定"
+    audit_requirements: "完整存取紀錄"
+
+  symptom_data:
+    anonymization: true
+    pseudonymization: true
+    minimal_collection: true
+
+consent_management:
+  consent_types:
+    explicit_consent: ""
+    implied_consent: ""
+    opt_in: true
+    opt_out: false
+
+  consent_characteristics:
+    freely_given: true
+    specific: true
+    informed: true
+    unambiguous: true
+    withdrawable: true
+
+  consent_mechanisms:
+    consent_form: ""
+    checkbox_design: ""
+    withdrawal_method: ""
+
+breach_response:
+  notification_obligations:
+    authority_notification: "72 hours"
+    data_subject_notification: "when_high_risk"
+
+  response_procedures:
+    - "事件偵測與評估"
+    - "風險評估"
+    - "主管機關通報"
+    - "當事人通知"
+    - "損害控制措施"
+
+compliance_monitoring:
+  privacy_impact_assessment:
+    required_when: "high_risk_processing"
+    assessment_criteria: []
+    review_frequency: "annually"
+
+  audit_requirements:
+    internal_audit: "quarterly"
+    external_audit: "annually"
+    audit_scope: []
+
+  documentation:
+    processing_records: true
+    consent_records: true
+    breach_records: true
+    training_records: true
+
+acceptance_criteria:
+  scenarios:
+    - id: "PDPA-001"
+      title: "Personal data collection notice"
+      given: "System needs to collect personal data"
+      when: "User is about to provide personal information"
+      then: "Clear PDPA notice displayed with all required elements"
+
+    - id: "PDPA-002"
+      title: "Consent withdrawal"
+      given: "User has previously given consent"
+      when: "User requests consent withdrawal"
+      then: "System processes withdrawal and stops data use within required timeframe"
+
+    - id: "PDPA-003"
+      title: "Data subject access request"
+      given: "Data subject requests access to their data"
+      when: "Valid request is submitted"
+      then: "Personal data provided within 15 days with proper verification"
+
+validation_checklist:
+  legal_compliance:
+    - [ ] PDPA articles properly referenced
+    - [ ] Legal basis for processing identified
+    - [ ] Data subject rights implemented
+    - [ ] Notification requirements met
+
+  technical_compliance:
+    - [ ] Encryption implemented
+    - [ ] Access controls in place
+    - [ ] Audit logging enabled
+    - [ ] Secure deletion capability
+
+  organizational_compliance:
+    - [ ] Privacy policies updated
+    - [ ] Staff training completed
+    - [ ] Incident response procedures
+    - [ ] Vendor agreements include PDPA terms
+
+testing_requirements:
+  compliance_tests:
+    - "Consent mechanism testing"
+    - "Data access request processing"
+    - "Data deletion verification"
+    - "Breach notification timing"
+
+  security_tests:
+    - "Encryption verification"
+    - "Access control testing"
+    - "Audit log integrity"
+    - "Data anonymization effectiveness"
+
+  user_experience_tests:
+    - "Consent flow usability"
+    - "Notice readability"
+    - "Rights exercise ease"
+    - "Withdrawal process clarity"
