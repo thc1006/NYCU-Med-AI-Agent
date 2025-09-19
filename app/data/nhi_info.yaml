@@ -1,0 +1,282 @@
+# 全民健康保險資訊
+# National Health Insurance Information
+
+nhi_general_info:
+  system_overview:
+    title: "全民健康保險制度"
+    description: "台灣全民健康保險為強制性社會保險制度，保障全民就醫權益"
+    coverage_rate: "99.8%"
+    established_year: "1995"
+    authority: "衛生福利部中央健康保險署"
+    website: "https://www.nhi.gov.tw/"
+
+  benefits:
+    medical_services:
+      - "門診醫療"
+      - "急診醫療"
+      - "住院醫療"
+      - "中醫醫療"
+      - "牙醫醫療"
+      - "復健治療"
+      - "預防保健"
+      - "居家照護"
+
+    excluded_services:
+      - "美容整形"
+      - "非必要之健康檢查"
+      - "指定醫師費"
+      - "病房差額"
+      - "掛號費"
+      - "部分負擔"
+
+nhi_card_services:
+  card_info:
+    title: "健保卡申請與使用"
+    description: "健保卡為就醫必備證件，具有身分識別及就醫紀錄功能"
+
+  application_process:
+    new_card:
+      - step: "準備文件"
+        documents: ["身分證明文件", "照片1張", "工本費200元"]
+      - step: "申請方式"
+        methods: ["親自申請", "委託代辦", "線上申請"]
+      - step: "申請地點"
+        locations: ["健保署各分區業務組", "聯合服務中心", "郵局代辦點"]
+
+    replacement:
+      reasons: ["遺失", "毀損", "資料異動"]
+      fee: "200元"
+      processing_time: "7-10個工作天"
+
+  card_features:
+    - "晶片儲存基本資料"
+    - "就醫序號管理"
+    - "重大傷病註記"
+    - "器官捐贈意願"
+    - "預防接種紀錄"
+
+nhi_online_services:
+  nhi_express_app:
+    title: "健保快易通APP"
+    description: "健保署官方行動應用程式，提供多項便民服務"
+    download_url: "https://www.nhi.gov.tw/Content_List.aspx?n=C428B3C8EE9C4E1B"
+
+    features:
+      authentication:
+        - "健保卡＋密碼認證"
+        - "生物特徵認證"
+        - "行動身分識別"
+
+      services:
+        - "健保卡狀態查詢"
+        - "投保資料查詢"
+        - "醫療費用查詢"
+        - "就醫院所查詢"
+        - "藥品資訊查詢"
+        - "疫苗接種紀錄"
+        - "數位健保卡"
+        - "醫療影像查詢"
+
+  web_services:
+    title: "健保署網路服務櫃檯"
+    url: "https://eservice.nhi.gov.tw/"
+
+    available_services:
+      - service: "投保資料查詢"
+        description: "查詢個人投保狀態、投保單位"
+      - service: "保險費繳費證明"
+        description: "列印年度保險費繳費證明"
+      - service: "醫療費用查詢"
+        description: "查詢個人醫療費用申報情形"
+      - service: "特約院所查詢"
+        description: "查詢全國健保特約醫療院所"
+      - service: "藥品查詢"
+        description: "健保給付藥品資訊查詢"
+
+medical_institutions:
+  search_system:
+    title: "全民健保醫療服務給付項目及支付標準"
+    url: "https://www.nhi.gov.tw/Content_List.aspx?n=A4EFF71D4E98C4C6"
+
+  contracted_institutions:
+    hospitals:
+      count: "約500家"
+      types: ["醫學中心", "區域醫院", "地區醫院"]
+
+    clinics:
+      count: "約10,000家"
+      types: ["西醫診所", "中醫診所", "牙醫診所"]
+
+    pharmacies:
+      count: "約6,000家"
+      services: ["處方箋調劑", "藥事服務"]
+
+  quality_indicators:
+    title: "醫療品質資訊公開"
+    url: "https://www.nhi.gov.tw/mqinfo/"
+    indicators:
+      - "醫院評鑑等級"
+      - "感染管制品質"
+      - "病人安全指標"
+      - "醫療效果指標"
+
+payment_and_copayment:
+  insurance_premium:
+    calculation_basis: "投保金額 × 費率 × 負擔比例"
+    current_rate: "5.17%"
+
+    categories:
+      - category: "第一類"
+        description: "公民營事業受僱者"
+        contribution_ratio:
+          insured: "30%"
+          employer: "60%"
+          government: "10%"
+
+      - category: "第二類"
+        description: "職業工會會員"
+        contribution_ratio:
+          insured: "60%"
+          government: "40%"
+
+      - category: "第三類"
+        description: "農漁會會員、農漁民"
+        contribution_ratio:
+          insured: "30%"
+          government: "70%"
+
+      - category: "第四類"
+        description: "軍人、軍眷"
+        contribution_ratio:
+          government: "100%"
+
+      - category: "第五類"
+        description: "低收入戶"
+        contribution_ratio:
+          government: "100%"
+
+      - category: "第六類"
+        description: "其他地區人口"
+        contribution_ratio:
+          insured: "60%"
+          government: "40%"
+
+  copayment:
+    title: "部分負擔費用"
+    description: "民眾就醫時需自行負擔之費用"
+
+    outpatient:
+      - level: "醫學中心"
+        fee: "420元"
+      - level: "區域醫院"
+        fee: "240元"
+      - level: "地區醫院"
+        fee: "80元"
+      - level: "基層診所"
+        fee: "50元"
+
+    emergency:
+      - condition: "急診經檢傷分類後"
+        fees:
+          level_1: "免部分負擔"
+          level_2: "300元"
+          level_3: "550元"
+          non_urgent: "750元"
+
+    inpatient:
+      acute_ward: "住院日數30日內：10% (每日最高1,500元)"
+      chronic_ward: "5% (每日最高80元)"
+      psychiatry: "5% (每日最高50元)"
+
+special_programs:
+  major_illness:
+    title: "重大傷病證明"
+    description: "罹患特定重大傷病者，就醫免部分負擔"
+    categories_count: "30大類400多項疾病"
+    application: "由醫師診斷後協助申請"
+
+  long_term_care:
+    title: "長照2.0服務"
+    description: "長期照顧服務整合，減輕家庭照護負擔"
+    eligibility:
+      - "65歲以上老人"
+      - "55-64歲原住民"
+      - "50歲以上失智症患者"
+      - "失能身心障礙者"
+
+  rare_disease:
+    title: "罕見疾病醫療"
+    description: "罕見疾病患者醫療費用補助"
+    coverage: "診斷、治療、特殊營養品、居家照護"
+
+customer_service:
+  service_hotline:
+    number: "0800-030-598"
+    hours: "週一至週五 08:30-17:30"
+    languages: ["國語", "台語", "客語", "英語"]
+
+  service_centers:
+    - name: "台北業務組"
+      address: "台北市中正區公園路15-1號"
+      phone: "02-2348-6751"
+
+    - name: "北區業務組"
+      address: "桃園市桃園區復興路195號"
+      phone: "03-332-5678"
+
+    - name: "中區業務組"
+      address: "台中市西區民權路95號"
+      phone: "04-2258-3988"
+
+    - name: "南區業務組"
+      address: "台南市東區崇明路261號"
+      phone: "06-224-5678"
+
+    - name: "高屏業務組"
+      address: "高雄市三民區九如二路152號"
+      phone: "07-231-5151"
+
+    - name: "東區業務組"
+      address: "花蓮市軒轅路36號"
+      phone: "03-856-5151"
+
+complaint_and_appeal:
+  dispute_resolution:
+    title: "醫療爭議處理"
+    channels:
+      - "院內申訴"
+      - "衛生局申訴"
+      - "健保署申復"
+      - "全民健保爭議審議會"
+
+  medical_accident:
+    title: "醫療事故救濟"
+    fund: "醫療事故救濟基金"
+    application_period: "事故發生2年內"
+
+frequently_asked_questions:
+  - question: "健保卡遺失怎麼辦？"
+    answer: "立即電話掛失(0800-030-598)，並儘速申請補發新卡"
+
+  - question: "轉診是否強制？"
+    answer: "目前採鼓勵轉診制度，非強制性，但轉診可減免部分負擔"
+
+  - question: "海外就醫可否申請給付？"
+    answer: "緊急傷病可申請核退，須於急診或住院當日起六個月內提出申請"
+
+  - question: "健保卡可以借人使用嗎？"
+    answer: "不可以，冒用健保卡就醫是違法行為，可能面臨刑責"
+
+  - question: "懷孕生產有哪些給付？"
+    answer: "提供10次免費產檢、生產費用給付、新生兒聽力篩檢等服務"
+
+legal_framework:
+  primary_law: "全民健康保險法"
+  regulations:
+    - "全民健康保險醫療辦法"
+    - "全民健康保險藥物給付項目及支付標準"
+    - "全民健康保險醫療服務給付項目及支付標準"
+
+updated_at: "2025-01-15"
+data_source: "衛生福利部中央健康保險署"
+disclaimer: "健保相關資訊以中央健康保險署最新公告為準，如有疑問請洽健保署服務專線"

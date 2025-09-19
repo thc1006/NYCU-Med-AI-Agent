@@ -1,0 +1,25 @@
+# 台灣醫療 AI 助理 - 開發環境依賴套件
+# 包含測試、格式化、型別檢查等開發工具
+
+# 引入生產環境依賴
+-r requirements.txt
+
+# 測試框架
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+
+# HTTP 測試與模擬
+httpx>=0.25.0
+respx>=0.20.0
+
+# 程式碼格式化
+black>=23.9.0
+isort>=5.12.0
+
+# 程式碼檢查
+flake8>=6.1.0
+mypy>=1.6.0
+
+# 其他開發工具
+pre-commit>=3.5.0

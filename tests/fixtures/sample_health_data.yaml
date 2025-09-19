@@ -1,0 +1,193 @@
+# Sample health information data structure for testing
+# This file demonstrates the expected format for health data
+
+topics:
+  - id: "medical_process"
+    title: "就醫流程指引"
+    summary: "了解台灣醫療體系的就醫流程，包括掛號、看診、檢查等步驟，確保您能順利就醫"
+    url: "https://www.mohw.gov.tw/medical-process"
+    category: "medical_guidance"
+    priority: 1
+    last_updated: "2024-01-15"
+
+  - id: "nhi_query"
+    title: "健保查詢服務"
+    summary: "查詢健保給付項目、醫療院所特約資訊及個人健保繳費與就醫紀錄"
+    url: "https://www.nhi.gov.tw/query-services"
+    category: "insurance"
+    priority: 2
+    last_updated: "2024-01-10"
+
+  - id: "emergency_guidance"
+    title: "急診就醫指引"
+    summary: "緊急醫療情況的處理原則、急診流程及注意事項，協助您在緊急時刻做出正確判斷"
+    url: "https://www.mohw.gov.tw/emergency-guide"
+    category: "emergency"
+    priority: 1
+    last_updated: "2024-01-20"
+
+  - id: "health_checkup"
+    title: "預防保健服務"
+    summary: "成人健康檢查、癌症篩檢及其他預防保健項目的說明與申請流程"
+    url: "https://www.hpa.gov.tw/health-checkup"
+    category: "prevention"
+    priority: 3
+    last_updated: "2024-01-05"
+
+resources:
+  - id: "mohw_portal"
+    title: "衛生福利部"
+    description: "中華民國衛生福利部官方網站，提供最新的衛生福利政策與法規資訊"
+    url: "https://www.mohw.gov.tw"
+    type: "government"
+    language: "zh-TW"
+    category: "primary"
+
+  - id: "nhi_portal"
+    title: "全民健康保險署"
+    description: "全民健康保險署官方網站，提供健保相關服務與資訊查詢"
+    url: "https://www.nhi.gov.tw"
+    type: "government"
+    language: "zh-TW"
+    category: "insurance"
+
+  - id: "cdc_portal"
+    title: "疾病管制署"
+    description: "衛生福利部疾病管制署官方網站，提供疫情資訊與防疫指引"
+    url: "https://www.cdc.gov.tw"
+    type: "government"
+    language: "zh-TW"
+    category: "disease_control"
+
+  - id: "hpa_portal"
+    title: "國民健康署"
+    description: "衛生福利部國民健康署官方網站，推廣健康促進與疾病預防"
+    url: "https://www.hpa.gov.tw"
+    type: "government"
+    language: "zh-TW"
+    category: "health_promotion"
+
+vaccinations:
+  children:
+    title: "兒童疫苗接種時程"
+    description: "依據疾病管制署公布之兒童常規疫苗接種時程表"
+    schedule:
+      - age: "出生24小時內"
+        age_months: 0
+        vaccines:
+          - name: "B型肝炎疫苗第1劑"
+            type: "hepatitis_b"
+            dose: 1
+            required: true
+          - name: "卡介苗"
+            type: "bcg"
+            dose: 1
+            required: true
+        notes: "應於出生後儘速接種，最遲不超過24小時"
+        location: "出生醫院"
+
+      - age: "出生滿1個月"
+        age_months: 1
+        vaccines:
+          - name: "B型肝炎疫苗第2劑"
+            type: "hepatitis_b"
+            dose: 2
+            required: true
+        notes: "與第1劑間隔至少1個月"
+        location: "醫療院所或衛生所"
+
+    source_url: "https://www.cdc.gov.tw/Category/Page/h2RHafMjIgXBvqPaRA9nKQ"
+    last_updated: "2024-01-15"
+
+  adults:
+    title: "成人疫苗接種建議"
+    description: "成人常規疫苗接種建議時程與注意事項"
+    recommendations:
+      - vaccine: "流感疫苗"
+        type: "influenza"
+        frequency: "每年1劑"
+        target_group: "所有成人，特別是65歲以上長者"
+        notes: "建議每年10月開始接種，流感季節前完成接種"
+        priority: "high"
+
+      - vaccine: "COVID-19疫苗"
+        type: "covid19"
+        frequency: "依疫情狀況調整"
+        target_group: "所有成人"
+        notes: "依據中央流行疫情指揮中心最新建議接種"
+        priority: "high"
+
+    source_url: "https://www.cdc.gov.tw/Category/Page/4Hj-ARQcxzQvXflMg6hU_g"
+    last_updated: "2024-01-10"
+
+insurance:
+  basic_info:
+    title: "全民健康保險基本資訊"
+    description: "全民健康保險制度基本介紹與保險對象權益說明"
+    coverage:
+      outpatient:
+        name: "門診醫療"
+        description: "一般門診、專科門診醫療服務"
+        included: true
+      inpatient:
+        name: "住院醫療"
+        description: "住院治療、手術等醫療服務"
+        included: true
+      emergency:
+        name: "急診醫療"
+        description: "急診醫療服務與緊急醫療處置"
+        included: true
+      dental:
+        name: "牙科醫療"
+        description: "牙科治療、口腔保健服務"
+        included: true
+      chinese_medicine:
+        name: "中醫醫療"
+        description: "中醫診療、針灸、傷科等服務"
+        included: true
+      preventive:
+        name: "預防保健"
+        description: "健康檢查、疫苗接種、癌症篩檢"
+        included: true
+
+    copayment:
+      outpatient:
+        description: "門診部分負擔"
+        amount: "50-420元"
+        details: "依醫院層級與疾病複雜度計算"
+      emergency:
+        description: "急診部分負擔"
+        amount: "150-550元"
+        details: "依急診檢傷分類與後續處置計算"
+      inpatient:
+        description: "住院部分負擔"
+        amount: "5-30%"
+        details: "依住院天數與病房等級計算"
+
+  services:
+    - id: "ic_card"
+      name: "健保卡申請"
+      description: "健保卡首次申請、換發、補發及讀卡機相關服務"
+      url: "https://www.nhi.gov.tw/Content_List.aspx?n=F1E9736C40AB4E65"
+      contact: "0800-030-598"
+      online_service: true
+
+    - id: "premium_query"
+      name: "保險費查詢"
+      description: "個人保險費繳費紀錄、欠費查詢及繳費證明申請"
+      url: "https://www.nhi.gov.tw/Content_List.aspx?n=AB41370000B72ED6"
+      contact: "0800-030-598"
+      online_service: true
+
+  contacts:
+    nhi_hotline:
+      number: "0800-030-598"
+      description: "健保諮詢服務專線"
+      hours: "週一至週五 08:30-17:30"
+    emergency_numbers:
+      - number: "119"
+        description: "消防救護車"
+      - number: "112"
+        description: "行動電話國際緊急號碼"
+      - number: "110"
+        description: "警察局"

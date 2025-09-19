@@ -1,0 +1,241 @@
+# 台灣官方健康資源清單
+# Taiwan Official Health Resources
+
+health_resources:
+  government_agencies:
+    - id: "mohw"
+      title: "衛生福利部"
+      summary: "中華民國衛生福利部官方網站，提供最新健康政策與醫療資訊"
+      category: "政府機關"
+      url: "https://www.mohw.gov.tw/"
+      priority: "high"
+      services:
+        - "健康政策資訊"
+        - "醫療法規查詢"
+        - "衛生統計資料"
+        - "緊急醫療資訊"
+      contact:
+        phone: "02-8590-6666"
+        address: "台北市南港區忠孝東路六段488號"
+
+    - id: "nhi"
+      title: "中央健康保險署"
+      summary: "全民健康保險制度管理機關，提供健保相關服務"
+      category: "政府機關"
+      url: "https://www.nhi.gov.tw/"
+      priority: "high"
+      services:
+        - "健保卡服務"
+        - "醫療費用查詢"
+        - "特約院所查詢"
+        - "健保快易通"
+      contact:
+        phone: "02-2706-5866"
+        service_line: "0800-030-598"
+
+    - id: "hpa"
+      title: "國民健康署"
+      summary: "負責疾病預防、健康促進及菸害防制等業務"
+      category: "政府機關"
+      url: "https://www.hpa.gov.tw/"
+      priority: "high"
+      services:
+        - "癌症防治"
+        - "慢性病防治"
+        - "菸害防制"
+        - "健康促進"
+      contact:
+        phone: "02-2522-0888"
+
+    - id: "cdc"
+      title: "疾病管制署"
+      summary: "傳染病防治、疫情監測及疫苗接種管理"
+      category: "政府機關"
+      url: "https://www.cdc.gov.tw/"
+      priority: "high"
+      services:
+        - "疫情資訊"
+        - "疫苗接種"
+        - "旅遊醫學"
+        - "傳染病通報"
+      contact:
+        phone: "02-2395-9825"
+        epidemic_hotline: "1922"
+
+  emergency_services:
+    - id: "fire_rescue"
+      title: "消防局救護服務"
+      summary: "緊急救護、災害救援、火災搶救服務"
+      category: "緊急服務"
+      url: "https://www.nfa.gov.tw/"
+      priority: "high"
+      emergency_number: "119"
+      services:
+        - "緊急救護"
+        - "火災搶救"
+        - "災害救援"
+        - "救護車派遣"
+
+    - id: "police"
+      title: "警察局緊急服務"
+      summary: "治安維護、交通事故處理、緊急報案"
+      category: "緊急服務"
+      url: "https://www.npa.gov.tw/"
+      priority: "high"
+      emergency_number: "110"
+      services:
+        - "緊急報案"
+        - "交通事故"
+        - "治安維護"
+        - "失蹤協尋"
+
+    - id: "gsm_emergency"
+      title: "行動電話緊急服務"
+      summary: "GSM國際緊急救援號碼，無卡也可撥打"
+      category: "緊急服務"
+      url: "https://www.ncc.gov.tw/"
+      priority: "high"
+      emergency_number: "112"
+      services:
+        - "國際緊急救援"
+        - "無卡緊急撥號"
+        - "位置定位服務"
+        - "多語言服務"
+
+    - id: "protection_line"
+      title: "婦幼保護專線"
+      summary: "家庭暴力、性侵害、兒童少年保護服務"
+      category: "緊急服務"
+      url: "https://www.mohw.gov.tw/cp-88-44603-1.html"
+      priority: "high"
+      emergency_number: "113"
+      services:
+        - "家庭暴力諮詢"
+        - "性侵害通報"
+        - "兒少保護"
+        - "24小時服務"
+
+    - id: "anti_fraud"
+      title: "反詐騙諮詢專線"
+      summary: "詐騙防制、諮詢舉報、被害預防宣導"
+      category: "緊急服務"
+      url: "https://www.165.gov.tw/"
+      priority: "medium"
+      emergency_number: "165"
+      services:
+        - "詐騙舉報"
+        - "防詐諮詢"
+        - "案件查詢"
+        - "宣導教育"
+
+  online_services:
+    - id: "nhi_express"
+      title: "健保快易通"
+      summary: "健保署官方APP，提供多項健保相關服務"
+      category: "線上服務"
+      url: "https://www.nhi.gov.tw/Content_List.aspx?n=C428B3C8EE9C4E1B"
+      priority: "high"
+      platform: ["iOS", "Android"]
+      services:
+        - "健保卡認證"
+        - "醫療費用查詢"
+        - "院所查詢"
+        - "藥品查詢"
+        - "疫苗接種紀錄"
+
+    - id: "taiwan_v_watch"
+      title: "Taiwan V-Watch"
+      summary: "COVID-19疫苗接種健康回報系統"
+      category: "線上服務"
+      url: "https://vaers.cdc.gov.tw/"
+      priority: "medium"
+      platform: ["Web", "LINE"]
+      services:
+        - "疫苗接種紀錄"
+        - "健康狀況回報"
+        - "不良反應通報"
+        - "接種證明查詢"
+
+    - id: "health_map"
+      title: "全民健保醫療品質資訊公開網"
+      summary: "醫療院所品質資訊查詢平台"
+      category: "線上服務"
+      url: "https://www.nhi.gov.tw/mqinfo/"
+      priority: "medium"
+      services:
+        - "醫院評鑑查詢"
+        - "醫療品質指標"
+        - "院所基本資料"
+        - "特約狀況查詢"
+
+  consultation_hotlines:
+    - id: "suicide_prevention"
+      title: "安心專線"
+      summary: "24小時免付費心理諮詢服務"
+      category: "諮詢專線"
+      hotline: "1925"
+      priority: "high"
+      services:
+        - "心理諮詢"
+        - "自殺防治"
+        - "情緒支持"
+        - "危機處理"
+
+    - id: "drug_abuse_prevention"
+      title: "戒毒成功專線"
+      summary: "藥物濫用防制、戒治諮詢服務"
+      category: "諮詢專線"
+      hotline: "0800-770-885"
+      priority: "medium"
+      services:
+        - "戒毒諮詢"
+        - "藥癮治療"
+        - "家庭支持"
+        - "復歸協助"
+
+    - id: "elder_protection"
+      title: "老人保護專線"
+      summary: "老人虐待、疏忽、遺棄案件通報"
+      category: "諮詢專線"
+      hotline: "412-8080"
+      priority: "medium"
+      services:
+        - "老人保護"
+        - "虐待通報"
+        - "照護諮詢"
+        - "權益維護"
+
+regional_health_bureaus:
+  - name: "台北市政府衛生局"
+    url: "https://health.gov.taipei/"
+    phone: "02-2720-8889"
+    jurisdiction: "台北市"
+
+  - name: "新北市政府衛生局"
+    url: "https://www.health.ntpc.gov.tw/"
+    phone: "02-2257-7155"
+    jurisdiction: "新北市"
+
+  - name: "桃園市政府衛生局"
+    url: "https://dph.tycg.gov.tw/"
+    phone: "03-332-4545"
+    jurisdiction: "桃園市"
+
+  - name: "台中市政府衛生局"
+    url: "https://www.health.taichung.gov.tw/"
+    phone: "04-2265-2666"
+    jurisdiction: "台中市"
+
+  - name: "台南市政府衛生局"
+    url: "https://health.tainan.gov.tw/"
+    phone: "06-267-9751"
+    jurisdiction: "台南市"
+
+  - name: "高雄市政府衛生局"
+    url: "https://khd.kcg.gov.tw/"
+    phone: "07-713-4000"
+    jurisdiction: "高雄市"
+
+updated_at: "2025-01-15"
+data_source: "各政府機關官方網站"
+disclaimer: "以上資訊以各官方網站公告為準，如有異動請以最新公告為主"

@@ -1,0 +1,296 @@
+# 台灣疫苗接種時程表
+# Taiwan Vaccination Schedule
+
+vaccination_schedules:
+  children:
+    title: "兒童常規疫苗接種時程"
+    description: "依據疾病管制署建議之兒童常規疫苗接種時程"
+    reference_url: "https://www.cdc.gov.tw/Category/Page/ZavP_bLOhACnNfHqVjUixw"
+
+    schedules:
+      - age: "出生24小時內"
+        age_code: "birth"
+        vaccines:
+          - name: "B型肝炎疫苗"
+            code: "HepB"
+            dose: "第1劑"
+            route: "肌肉注射"
+            site: "大腿前外側"
+            notes: "出生後儘速接種，最遲不超過24小時"
+
+      - age: "出生滿1個月"
+        age_code: "1month"
+        vaccines:
+          - name: "B型肝炎疫苗"
+            code: "HepB"
+            dose: "第2劑"
+            route: "肌肉注射"
+            site: "大腿前外側"
+            notes: "與第1劑間隔至少4週"
+
+      - age: "出生滿2個月"
+        age_code: "2months"
+        vaccines:
+          - name: "白喉破傷風非細胞性百日咳、b型嗜血桿菌及不活化小兒麻痺五合一疫苗"
+            code: "DTaP-Hib-IPV"
+            dose: "第1劑"
+            route: "肌肉注射"
+            site: "大腿前外側"
+          - name: "13價結合型肺炎鏈球菌疫苗"
+            code: "PCV13"
+            dose: "第1劑"
+            route: "肌肉注射"
+            site: "大腿前外側"
+          - name: "輪狀病毒疫苗"
+            code: "RV"
+            dose: "第1劑"
+            route: "口服"
+            notes: "自費接種，建議但非強制"
+
+      - age: "出生滿4個月"
+        age_code: "4months"
+        vaccines:
+          - name: "白喉破傷風非細胞性百日咳、b型嗜血桿菌及不活化小兒麻痺五合一疫苗"
+            code: "DTaP-Hib-IPV"
+            dose: "第2劑"
+            route: "肌肉注射"
+            site: "大腿前外側"
+          - name: "13價結合型肺炎鏈球菌疫苗"
+            code: "PCV13"
+            dose: "第2劑"
+            route: "肌肉注射"
+            site: "大腿前外側"
+          - name: "輪狀病毒疫苗"
+            code: "RV"
+            dose: "第2劑"
+            route: "口服"
+            notes: "自費接種"
+
+      - age: "出生滿6個月"
+        age_code: "6months"
+        vaccines:
+          - name: "白喉破傷風非細胞性百日咳、b型嗜血桿菌及不活化小兒麻痺五合一疫苗"
+            code: "DTaP-Hib-IPV"
+            dose: "第3劑"
+            route: "肌肉注射"
+            site: "大腿前外側"
+          - name: "B型肝炎疫苗"
+            code: "HepB"
+            dose: "第3劑"
+            route: "肌肉注射"
+            site: "大腿前外側"
+          - name: "13價結合型肺炎鏈球菌疫苗"
+            code: "PCV13"
+            dose: "第3劑"
+            route: "肌肉注射"
+            site: "大腿前外側"
+          - name: "輪狀病毒疫苗"
+            code: "RV"
+            dose: "第3劑"
+            route: "口服"
+            notes: "僅五價輪狀病毒疫苗需要第3劑"
+
+      - age: "出生滿12個月"
+        age_code: "12months"
+        vaccines:
+          - name: "麻疹腮腺炎德國麻疹疫苗"
+            code: "MMR"
+            dose: "第1劑"
+            route: "皮下注射"
+            site: "上臂外側"
+          - name: "水痘疫苗"
+            code: "Varicella"
+            dose: "第1劑"
+            route: "皮下注射"
+            site: "上臂外側"
+          - name: "13價結合型肺炎鏈球菌疫苗"
+            code: "PCV13"
+            dose: "第4劑"
+            route: "肌肉注射"
+            site: "大腿前外側或上臂三角肌"
+
+      - age: "出生滿15個月"
+        age_code: "15months"
+        vaccines:
+          - name: "白喉破傷風非細胞性百日咳、b型嗜血桿菌及不活化小兒麻痺五合一疫苗"
+            code: "DTaP-Hib-IPV"
+            dose: "第4劑"
+            route: "肌肉注射"
+            site: "大腿前外側或上臂三角肌"
+
+      - age: "出生滿18個月"
+        age_code: "18months"
+        vaccines:
+          - name: "A型肝炎疫苗"
+            code: "HepA"
+            dose: "第1劑"
+            route: "肌肉注射"
+            site: "大腿前外側或上臂三角肌"
+
+      - age: "出生滿27個月"
+        age_code: "27months"
+        vaccines:
+          - name: "A型肝炎疫苗"
+            code: "HepA"
+            dose: "第2劑"
+            route: "肌肉注射"
+            site: "大腿前外側或上臂三角肌"
+            notes: "與第1劑間隔12個月"
+
+      - age: "國小一年級"
+        age_code: "grade1"
+        vaccines:
+          - name: "麻疹腮腺炎德國麻疹疫苗"
+            code: "MMR"
+            dose: "第2劑"
+            route: "皮下注射"
+            site: "上臂外側"
+          - name: "減量破傷風白喉非細胞性百日咳及不活化小兒麻痺混合疫苗"
+            code: "Tdap-IPV"
+            dose: "第5劑"
+            route: "肌肉注射"
+            site: "上臂三角肌"
+
+      - age: "國中一年級"
+        age_code: "grade7"
+        vaccines:
+          - name: "減量破傷風白喉非細胞性百日咳疫苗"
+            code: "Tdap"
+            dose: "追加劑"
+            route: "肌肉注射"
+            site: "上臂三角肌"
+          - name: "人類乳突病毒疫苗"
+            code: "HPV"
+            dose: "第1劑"
+            route: "肌肉注射"
+            site: "上臂三角肌"
+            target: "國中女生"
+            notes: "2023年起擴大至男生"
+
+  adults:
+    title: "成人疫苗接種建議"
+    description: "成人及特殊族群疫苗接種建議"
+    reference_url: "https://www.cdc.gov.tw/Category/Page/YbwXWgONNuFhV_1rxQZEog"
+
+    schedules:
+      - target_group: "一般成人"
+        vaccines:
+          - name: "流感疫苗"
+            code: "Influenza"
+            frequency: "每年1劑"
+            season: "10月-2月"
+            priority_groups: ["65歲以上", "慢性病患", "孕婦", "6個月-國小入學前幼兒"]
+
+          - name: "COVID-19疫苗"
+            code: "COVID-19"
+            frequency: "依疫情及政策調整"
+            notes: "請依中央流行疫情指揮中心最新政策接種"
+
+          - name: "破傷風白喉疫苗"
+            code: "Td"
+            frequency: "每10年1劑"
+            notes: "成人基礎免疫建議"
+
+      - target_group: "65歲以上長者"
+        vaccines:
+          - name: "23價肺炎鏈球菌多醣體疫苗"
+            code: "PPV23"
+            frequency: "1劑"
+            notes: "75歲以上或具慢性病長者優先"
+
+          - name: "帶狀疱疹疫苗"
+            code: "Zoster"
+            frequency: "1劑"
+            notes: "自費接種，建議50歲以上接種"
+
+      - target_group: "孕婦"
+        vaccines:
+          - name: "百日咳疫苗"
+            code: "Tdap"
+            timing: "懷孕28-36週"
+            notes: "保護新生兒免於百日咳感染"
+
+          - name: "流感疫苗"
+            code: "Influenza"
+            timing: "流行季節"
+            notes: "孕婦為流感高危險群"
+
+      - target_group: "慢性病患"
+        vaccines:
+          - name: "肺炎鏈球菌疫苗"
+            code: "PCV13/PPV23"
+            notes: "依年齡及疾病別調整接種策略"
+
+          - name: "流感疫苗"
+            code: "Influenza"
+            frequency: "每年1劑"
+            notes: "慢性病患為流感併發重症高危險群"
+
+  travel_vaccines:
+    title: "出國旅遊疫苗建議"
+    description: "依旅遊地區疫情建議之疫苗接種"
+    reference_url: "https://www.cdc.gov.tw/Category/Page/2lW-eo-7317xtXJbhH0QnA"
+
+    common_vaccines:
+      - name: "A型肝炎疫苗"
+        indications: ["衛生條件較差地區"]
+        schedule: "出發前2-4週接種"
+
+      - name: "B型肝炎疫苗"
+        indications: ["B肝流行地區"]
+        schedule: "建議完成3劑基礎免疫"
+
+      - name: "日本腦炎疫苗"
+        indications: ["東南亞、南亞地區"]
+        schedule: "出發前4週開始接種"
+
+      - name: "黃熱病疫苗"
+        indications: ["非洲、南美洲部分地區"]
+        schedule: "出發前10天接種"
+        notes: "部分國家入境必備"
+
+vaccination_sites:
+  public_health_centers:
+    title: "各縣市衛生局所"
+    description: "提供兒童常規疫苗及成人公費疫苗接種服務"
+
+  contracted_clinics:
+    title: "合約醫療院所"
+    description: "與衛生局簽約之診所、醫院"
+    finder_url: "https://www.cdc.gov.tw/Category/Page/E_VacPrint"
+
+  travel_clinics:
+    title: "旅遊醫學門診"
+    description: "提供出國前健康諮詢及疫苗接種"
+    appointment_required: true
+
+important_notes:
+  contraindications:
+    - "發燒或急性疾病"
+    - "免疫功能不全"
+    - "對疫苗成分過敏"
+    - "正在接受免疫抑制治療"
+
+  side_effects:
+    common:
+      - "接種部位紅腫疼痛"
+      - "輕微發燒"
+      - "疲倦感"
+    rare:
+      - "嚴重過敏反應"
+      - "熱性痙攣"
+
+  after_vaccination:
+    - "接種後留觀30分鐘"
+    - "多喝水、多休息"
+    - "接種部位保持清潔乾燥"
+    - "如有嚴重不適立即就醫"
+
+contact_info:
+  cdc_hotline: "1922"
+  cdc_website: "https://www.cdc.gov.tw/"
+  vaccine_injury_compensation: "https://www.cdc.gov.tw/Category/Page/2llLGGBBGAKXDAohYOD4QQ"
+
+updated_at: "2025-01-15"
+data_source: "衛生福利部疾病管制署"
+disclaimer: "疫苗接種時程可能因疫情或政策調整而異動，請以疾病管制署最新公告為準"
