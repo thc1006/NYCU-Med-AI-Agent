@@ -1,0 +1,156 @@
+# 台灣健康教育主題資料
+# Taiwan Health Education Topics Data
+
+health_topics:
+  - id: "medical_procedures"
+    title: "就醫流程指南"
+    summary: "完整的台灣就醫流程說明，包含掛號、看診、檢查、取藥等步驟"
+    category: "就醫指導"
+    url: "https://www.mohw.gov.tw/cp-16-44615-1.html"
+    priority: "high"
+    keywords: ["就醫", "掛號", "看診", "流程"]
+    content_points:
+      - "選擇適當的醫療院所"
+      - "掛號方式與注意事項"
+      - "就診準備與攜帶物品"
+      - "檢查流程與配合事項"
+      - "取藥與用藥指導"
+
+  - id: "emergency_guidance"
+    title: "急診就醫指引"
+    summary: "何時需要就醫急診、急診流程、緊急處置原則"
+    category: "急診醫療"
+    url: "https://www.mohw.gov.tw/cp-3795-44821-1.html"
+    priority: "high"
+    keywords: ["急診", "緊急", "119", "急救"]
+    content_points:
+      - "急診適應症判斷"
+      - "急診檢傷分級制度"
+      - "急診就醫準備事項"
+      - "家屬陪伴注意事項"
+      - "急診費用與給付"
+    emergency_numbers:
+      - number: "119"
+        description: "消防局救護車"
+      - number: "112"
+        description: "行動電話緊急救援"
+
+  - id: "nhi_query_guide"
+    title: "健保查詢服務"
+    summary: "健保卡使用、給付查詢、線上服務申請等完整指南"
+    category: "健保服務"
+    url: "https://www.nhi.gov.tw/Content_List.aspx?n=395F52D193F3B5C7"
+    priority: "high"
+    keywords: ["健保", "查詢", "給付", "健保卡"]
+    content_points:
+      - "健保卡申請與換發"
+      - "醫療費用給付查詢"
+      - "健保快易通APP使用"
+      - "網路服務櫃檯操作"
+      - "保險費繳納查詢"
+
+  - id: "preventive_care"
+    title: "預防保健服務"
+    summary: "政府提供的免費健檢、疫苗接種、癌症篩檢等預防保健服務"
+    category: "預防保健"
+    url: "https://www.hpa.gov.tw/Pages/List.aspx?nodeid=189"
+    priority: "medium"
+    keywords: ["健檢", "疫苗", "篩檢", "預防"]
+    content_points:
+      - "成人預防保健服務"
+      - "兒童預防保健服務"
+      - "癌症篩檢項目"
+      - "疫苗接種時程"
+      - "口腔保健服務"
+
+  - id: "maternal_child_health"
+    title: "婦幼健康照護"
+    summary: "孕產婦健康管理、兒童發展篩檢、育兒指導等服務資訊"
+    category: "婦幼保健"
+    url: "https://www.hpa.gov.tw/Pages/List.aspx?nodeid=204"
+    priority: "medium"
+    keywords: ["孕婦", "兒童", "發展", "產檢"]
+    content_points:
+      - "產前檢查服務"
+      - "兒童健康手冊使用"
+      - "兒童發展篩檢"
+      - "哺乳指導與支持"
+      - "育兒諮詢服務"
+
+  - id: "chronic_disease_management"
+    title: "慢性病管理"
+    summary: "糖尿病、高血壓、慢性腎臟病等慢性疾病的自我管理指導"
+    category: "慢性病照護"
+    url: "https://www.hpa.gov.tw/Pages/List.aspx?nodeid=359"
+    priority: "medium"
+    keywords: ["糖尿病", "高血壓", "慢性病", "管理"]
+    content_points:
+      - "血糖自我監測"
+      - "血壓量測記錄"
+      - "用藥遵從性"
+      - "飲食控制原則"
+      - "運動處方建議"
+
+  - id: "mental_health"
+    title: "心理健康資源"
+    summary: "心理健康促進、壓力管理、心理諮商資源介紹"
+    category: "心理健康"
+    url: "https://www.mohw.gov.tw/cp-3421-44592-1.html"
+    priority: "medium"
+    keywords: ["心理", "壓力", "諮商", "情緒"]
+    content_points:
+      - "壓力調適技巧"
+      - "心理諮商管道"
+      - "自殺防治資源"
+      - "職場心理健康"
+      - "社區心理衛生中心"
+    emergency_numbers:
+      - number: "1925"
+        description: "安心專線"
+      - number: "113"
+        description: "婦幼保護專線"
+
+  - id: "senior_health"
+    title: "長者健康照護"
+    summary: "長者預防保健、長照服務、失智症照護等資源"
+    category: "長者照護"
+    url: "https://www.mohw.gov.tw/cp-4636-52119-1.html"
+    priority: "medium"
+    keywords: ["長者", "長照", "失智", "老人"]
+    content_points:
+      - "長者健康檢查"
+      - "長照2.0服務申請"
+      - "失智症照護資源"
+      - "老人保護服務"
+      - "居家醫療服務"
+
+  - id: "occupational_health"
+    title: "職業健康安全"
+    summary: "職場健康檢查、職業病預防、工作場所安全資訊"
+    category: "職業健康"
+    url: "https://www.osha.gov.tw/1106/1113/1114/2472/"
+    priority: "low"
+    keywords: ["職業", "健檢", "工安", "職災"]
+    content_points:
+      - "勞工健康檢查"
+      - "職業病通報"
+      - "工作場所健康促進"
+      - "職災給付申請"
+      - "職業安全衛生教育"
+
+  - id: "medication_safety"
+    title: "用藥安全指導"
+    summary: "正確用藥觀念、藥物諮詢、用藥安全五大核心能力"
+    category: "用藥安全"
+    url: "https://www.fda.gov.tw/TC/siteContent.aspx?sid=1818"
+    priority: "medium"
+    keywords: ["用藥", "藥物", "安全", "諮詢"]
+    content_points:
+      - "用藥安全五要五不"
+      - "藥袋標示說明"
+      - "藥物不良反應通報"
+      - "用藥諮詢管道"
+      - "特殊族群用藥注意"
+
+updated_at: "2025-01-15"
+data_source: "衛生福利部、國民健康署、中央健康保險署"

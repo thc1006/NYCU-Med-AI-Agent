@@ -1,0 +1,19 @@
+# 台灣醫療 AI 助理 - 生產環境依賴套件
+# 基於 Python 3.11 的 FastAPI 應用程式
+
+# Web 框架
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+
+# HTTP 客戶端
+httpx>=0.25.0
+
+# 資料驗證與序列化
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# 環境變數管理
+python-dotenv>=1.0.0
+
+# 開發與測試依賴（可選安裝）
+# pip install -r requirements-dev.txt
