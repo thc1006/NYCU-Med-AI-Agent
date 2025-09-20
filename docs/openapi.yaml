@@ -1,0 +1,950 @@
+openapi: 3.0.0
+info:
+  title: 台灣醫療 AI 助理 API
+  description: |
+    專為台灣醫療環境設計的 AI 助理系統，提供症狀分析、醫院搜尋與緊急醫療指引服務。
+
+    ## 主要功能
+
+    - **症狀分級 (Triage)**: 基於描述的症狀進行智能分級，提供就醫建議
+    - **醫院搜尋**: 根據位置搜尋就近醫療院所，支援座標、地址或IP定位
+    - **緊急醫療指引**: 提供台灣緊急聯絡電話與急救資訊
+    - **健康資訊**: 提供健康教育資源與疫苗接種資訊
+
+    ## 重要聲明
+
+    ⚠️ **醫療免責聲明**: 本服務僅供參考，不能取代專業醫療診斷。如有緊急狀況，請立即撥打119。
+
+    🔒 **隱私保護**: 本服務遵循台灣個人資料保護法(PDPA)，不收集或儲存個人醫療資料。
+
+    ## 緊急聯絡電話
+
+    - **119**: 消防救護專線
+    - **110**: 警察報案專線
+    - **112**: 手機緊急撥號
+    - **113**: 婦幼保護專線
+
+    ## API 使用規範
+
+    - 所有API回應均包含醫療免責聲明
+    - 紅旗症狀將自動觸發緊急警告
+    - 位置資訊僅用於搜尋，不會被儲存
+    - 符合台灣PDPA個資保護規範
+  version: "1.0.0"
+  contact:
+    name: Taiwan Medical AI Assistant Support
+    email: support@taiwan-med-ai.tw
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+  termsOfService: /terms
+
+servers:
+  - url: https://api.taiwan-med-ai.tw
+    description: 正式環境
+  - url: https://staging-api.taiwan-med-ai.tw
+    description: 測試環境
+  - url: http://localhost:8000
+    description: 開發環境
+
+tags:
+  - name: 症狀分級
+    description: 症狀評估與分級服務
+  - name: 醫院搜尋
+    description: 就近醫療院所搜尋服務
+  - name: 元數據
+    description: 急救熱線與系統資訊
+  - name: 健康資訊
+    description: 健康教育與疫苗資訊
+  - name: 系統監控
+    description: 系統健康檢查與監控
+
+paths:
+  # ========== 症狀分級 API ==========
+  /v1/triage:
+    post:
+      tags: [症狀分級]
+      summary: 症狀評估與分級
+      description: |
+        根據症狀描述提供智能分級建議、就醫指引與急救提醒。
+
+        ### 分級標準
+        - **emergency**: 緊急狀況，立即撥打119
+        - **urgent**: 緊急，盡快就醫
+        - **outpatient**: 安排門診就醫
+        - **self-care**: 可自我照護觀察
+
+        ### 安全機制
+        系統會自動檢測紅旗症狀，並提供緊急聯絡資訊。
+      operationId: assessSymptoms
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriageRequest'
+            examples:
+              胸痛症狀:
+                summary: 急性胸痛評估
+                value:
+                  symptom_text: "胸部劇痛，有壓迫感，冒冷汗"
+                  age: 55
+                  gender: "M"
+                  duration_hours: 2
+                  has_chronic_disease: true
+                  medications: ["降血壓藥", "阿斯匹靈"]
+                  include_nearby_hospitals: true
+                  location:
+                    latitude: 25.0330
+                    longitude: 121.5654
+              一般感冒:
+                summary: 輕微感冒症狀
+                value:
+                  symptom_text: "流鼻水、輕微頭痛、疲倦"
+                  age: 30
+                  gender: "F"
+                  duration_hours: 24
+                  has_chronic_disease: false
+                  medications: []
+      responses:
+        '200':
+          description: 症狀評估完成
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriageResponse'
+              examples:
+                緊急狀況:
+                  summary: 緊急症狀評估結果
+                  value:
+                    triage_level: "emergency"
+                    advice: "您的症狀可能表示急性心臟病發作，請立即撥打119或前往最近的急診室。"
+                    detected_symptoms: ["胸痛", "冷汗", "壓迫感"]
+                    next_steps:
+                      - "立即撥打119救護車"
+                      - "保持冷靜，平躺休息"
+                      - "如有硝化甘油藥物可舌下含服"
+                      - "等待救護人員到達"
+                    disclaimer: "⚠️ 本評估僅供參考，不能取代專業醫療診斷。緊急狀況請立即撥打119。"
+                    emergency_numbers: ["119", "112", "110"]
+                    recommended_departments: ["心臟內科", "急診科"]
+                    confidence_score: 0.92
+                    nearby_hospitals: []
+                    request_id: "triage_abc123def456"
+                    timestamp: "2024-01-01T12:00:00Z"
+                    locale: "zh-TW"
+                輕微症狀:
+                  summary: 輕微症狀評估結果
+                  value:
+                    triage_level: "self-care"
+                    advice: "您的症狀看起來像是一般感冒，建議多休息、多喝水，並觀察症狀變化。"
+                    detected_symptoms: ["流鼻水", "頭痛", "疲倦"]
+                    next_steps:
+                      - "充分休息"
+                      - "多喝溫開水"
+                      - "清淡飲食"
+                      - "觀察症狀變化"
+                      - "如症狀持續3天以上請就醫"
+                    disclaimer: "⚠️ 本評估僅供參考，如症狀持續或惡化請就醫。"
+                    emergency_numbers: []
+                    recommended_departments: ["家醫科"]
+                    confidence_score: 0.78
+                    request_id: "triage_xyz789abc123"
+                    timestamp: "2024-01-01T12:00:00Z"
+                    locale: "zh-TW"
+        '422':
+          description: 輸入資料驗證錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: 服務器內部錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /v1/triage/quick:
+    post:
+      tags: [症狀分級]
+      summary: 快速症狀評估
+      description: 僅提供症狀文字的快速評估，適用於簡單查詢場景。
+      operationId: quickAssessment
+      parameters:
+        - name: symptom_text
+          in: query
+          required: true
+          description: 症狀描述
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 500
+          example: "頭痛、發燒38度"
+      responses:
+        '200':
+          description: 快速評估完成
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuickAssessmentResponse'
+
+  # ========== 醫院搜尋 API ==========
+  /v1/hospitals/nearby:
+    get:
+      tags: [醫院搜尋]
+      summary: 搜尋就近醫療院所
+      description: |
+        根據座標、地址或IP位置搜尋附近的醫院，包含健保特約資訊。
+
+        ### 定位方式優先級
+        1. **座標定位** (latitude + longitude) - 最精確
+        2. **地址定位** (address) - 需要geocoding
+        3. **IP定位** (use_ip=true) - 誤差較大
+
+        ### 特色功能
+        - 支援症狀相關的緊急醫院優先排序
+        - 整合健保特約院所資訊
+        - 自動調整搜尋範圍（緊急狀況限制3公里內）
+      operationId: searchNearbyHospitals
+      parameters:
+        - name: latitude
+          in: query
+          description: 緯度（優先級最高）
+          schema:
+            type: number
+            format: double
+            minimum: -90
+            maximum: 90
+          example: 25.0330
+        - name: longitude
+          in: query
+          description: 經度（與緯度一起使用）
+          schema:
+            type: number
+            format: double
+            minimum: -180
+            maximum: 180
+          example: 121.5654
+        - name: address
+          in: query
+          description: 台灣地址字串（需要geocoding）
+          schema:
+            type: string
+            maxLength: 200
+          example: "台北市大安區忠孝東路四段1號"
+        - name: use_ip
+          in: query
+          description: 使用IP定位（最低優先級）
+          schema:
+            type: boolean
+            default: false
+        - name: radius
+          in: query
+          description: 搜尋半徑（公尺）
+          schema:
+            type: integer
+            minimum: 100
+            maximum: 50000
+            default: 3000
+        - name: max_results
+          in: query
+          description: 最大結果數量
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 20
+        - name: include_nhia
+          in: query
+          description: 是否包含健保特約資訊
+          schema:
+            type: boolean
+            default: true
+        - name: symptoms
+          in: query
+          description: 症狀描述列表（用於緊急醫院優先排序）
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+          example: ["胸痛", "呼吸困難"]
+      responses:
+        '200':
+          description: 醫院搜尋成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HospitalSearchResponse'
+              examples:
+                台北市醫院搜尋:
+                  summary: 台北市中心醫院搜尋結果
+                  value:
+                    results:
+                      - id: "ChIJN1t_tDeuEmsRUsoyG83frY4"
+                        name: "台大醫院"
+                        address: "台北市中正區中山南路7號"
+                        latitude: 25.0408
+                        longitude: 121.5215
+                        distance_meters: 850
+                        phone: "02-23123456"
+                        rating: 4.2
+                        is_open_now: true
+                        business_status: "OPERATIONAL"
+                        nhia_info:
+                          is_contracted: true
+                          specialties: ["內科", "外科", "急診科"]
+                          level: "醫學中心"
+                    search_center:
+                      latitude: 25.0330
+                      longitude: 121.5654
+                    search_radius: 3000
+                    total_count: 15
+                    locale: "zh-TW"
+                    emergency_numbers: ["119", "110", "112"]
+                    emergency_reminder: "緊急情況請立即撥打 119（消防救護）或 110（警察）。本搜尋結果僅供參考，不可取代專業醫療判斷。"
+                    search_method: "coordinates"
+                    medical_disclaimer: "⚠️ 本服務僅供參考，不能取代專業醫療診斷。如有緊急狀況，請立即撥打119。"
+                    privacy_notice: "您的位置資訊僅用於搜尋附近醫院，不會被儲存或分享。"
+        '400':
+          description: 請求參數錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                定位失敗:
+                  summary: 無法確定位置
+                  value:
+                    detail: "Must provide either (latitude+longitude), address, or set use_ip=true"
+                座標範圍錯誤:
+                  summary: 座標超出有效範圍
+                  value:
+                    detail: "Invalid latitude. Must be between -90 and 90."
+
+  # ========== 元數據 API ==========
+  /v1/meta/emergency:
+    get:
+      tags: [元數據]
+      summary: 取得台灣急救熱線資訊
+      description: 提供台灣地區官方認可的急救與緊急聯絡電話號碼，包含使用說明、適用範圍和注意事項。
+      operationId: getEmergencyNumbers
+      responses:
+        '200':
+          description: 急救熱線資訊
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmergencyResponse'
+
+  # ========== 健康資訊 API ==========
+  /v1/health-info/topics:
+    get:
+      tags: [健康資訊]
+      summary: 取得健康教育主題清單
+      description: 提供台灣健康教育主題資訊，包含就醫流程、急診指引等主題。
+      operationId: getHealthTopics
+      responses:
+        '200':
+          description: 健康主題清單
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthTopicsResponse'
+
+  # ========== 系統監控 API ==========
+  /healthz:
+    get:
+      tags: [系統監控]
+      summary: 健康檢查端點
+      description: 檢查 API 服務是否正常運行
+      operationId: healthCheck
+      responses:
+        '200':
+          description: 服務正常
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+
+  /v1/monitoring/health:
+    get:
+      tags: [系統監控]
+      summary: 詳細健康檢查
+      description: 提供詳細的系統健康狀態，包含外部服務連線狀態
+      operationId: detailedHealthCheck
+      responses:
+        '200':
+          description: 詳細健康狀態
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailedHealthResponse'
+
+components:
+  schemas:
+    # ========== 請求模型 ==========
+    TriageRequest:
+      type: object
+      required:
+        - symptom_text
+      properties:
+        symptom_text:
+          type: string
+          description: 症狀描述
+          minLength: 1
+          maxLength: 1000
+          example: "胸部劇痛，呼吸困難，冒冷汗"
+        age:
+          type: integer
+          description: 年齡
+          minimum: 0
+          maximum: 150
+          example: 45
+        gender:
+          type: string
+          description: 性別
+          enum: ["M", "F", "O"]
+          example: "M"
+        duration_hours:
+          type: integer
+          description: 症狀持續時間（小時）
+          minimum: 0
+          maximum: 8760
+          example: 2
+        has_chronic_disease:
+          type: boolean
+          description: 是否有慢性疾病
+          default: false
+        medications:
+          type: array
+          description: 目前服用藥物
+          items:
+            type: string
+          example: ["降血壓藥", "阿斯匹靈"]
+        include_nearby_hospitals:
+          type: boolean
+          description: 是否包含附近醫院資訊
+          default: false
+        location:
+          type: object
+          description: 位置資訊（搜尋附近醫院時使用）
+          properties:
+            latitude:
+              type: number
+              format: double
+              minimum: -90
+              maximum: 90
+            longitude:
+              type: number
+              format: double
+              minimum: -180
+              maximum: 180
+          example:
+            latitude: 25.0330
+            longitude: 121.5654
+
+    # ========== 回應模型 ==========
+    TriageResponse:
+      type: object
+      required:
+        - triage_level
+        - advice
+        - detected_symptoms
+        - next_steps
+        - disclaimer
+        - request_id
+        - timestamp
+        - locale
+      properties:
+        triage_level:
+          type: string
+          description: 分級結果
+          enum: ["emergency", "urgent", "outpatient", "self-care"]
+          example: "emergency"
+        advice:
+          type: string
+          description: 就醫建議
+          example: "您的症狀可能表示急性心臟病發作，請立即撥打119或前往最近的急診室。"
+        detected_symptoms:
+          type: array
+          description: 檢測到的症狀
+          items:
+            type: string
+          example: ["胸痛", "冷汗", "呼吸困難"]
+        next_steps:
+          type: array
+          description: 下一步行動建議
+          items:
+            type: string
+          example: ["立即撥打119救護車", "保持冷靜，平躺休息", "等待救護人員到達"]
+        disclaimer:
+          type: string
+          description: 醫療免責聲明
+          example: "⚠️ 本評估僅供參考，不能取代專業醫療診斷。緊急狀況請立即撥打119。"
+        emergency_numbers:
+          type: array
+          description: 緊急聯絡電話
+          items:
+            type: string
+          example: ["119", "112", "110"]
+        recommended_departments:
+          type: array
+          description: 推薦就診科別
+          items:
+            type: string
+          example: ["心臟內科", "急診科"]
+        estimated_wait_time:
+          type: string
+          description: 預估等候時間
+          example: "立即處理"
+        confidence_score:
+          type: number
+          format: double
+          description: 信心分數
+          minimum: 0
+          maximum: 1
+          example: 0.92
+        nearby_hospitals:
+          type: array
+          description: 附近醫院（如有請求）
+          items:
+            $ref: '#/components/schemas/HospitalInfo'
+        request_id:
+          type: string
+          description: 請求唯一識別碼
+          example: "triage_abc123def456"
+        timestamp:
+          type: string
+          format: date-time
+          description: 評估時間戳
+          example: "2024-01-01T12:00:00Z"
+        locale:
+          type: string
+          description: 語言地區
+          example: "zh-TW"
+
+    QuickAssessmentResponse:
+      type: object
+      required:
+        - level
+        - advice
+        - next_steps
+        - disclaimer
+        - locale
+      properties:
+        level:
+          type: string
+          description: 分級結果
+          enum: ["emergency", "urgent", "outpatient", "self-care"]
+        advice:
+          type: string
+          description: 簡要建議
+        next_steps:
+          type: array
+          description: 前3個關鍵步驟
+          items:
+            type: string
+          maxItems: 3
+        emergency_numbers:
+          type: array
+          description: 緊急聯絡電話（僅緊急狀況）
+          items:
+            type: string
+        disclaimer:
+          type: string
+          description: 簡化免責聲明
+          example: "本評估僅供參考，緊急狀況請撥打119。"
+        locale:
+          type: string
+          example: "zh-TW"
+
+    HospitalSearchResponse:
+      type: object
+      required:
+        - results
+        - search_center
+        - search_radius
+        - total_count
+        - locale
+        - emergency_numbers
+        - emergency_reminder
+        - search_method
+        - medical_disclaimer
+        - privacy_notice
+      properties:
+        results:
+          type: array
+          description: 醫院搜尋結果
+          items:
+            $ref: '#/components/schemas/HospitalInfo'
+        hospitals:
+          type: array
+          description: 醫院搜尋結果（別名）
+          items:
+            $ref: '#/components/schemas/HospitalInfo'
+        search_center:
+          type: object
+          description: 搜尋中心點
+          properties:
+            latitude:
+              type: number
+              format: double
+            longitude:
+              type: number
+              format: double
+        search_radius:
+          type: integer
+          description: 搜尋半徑（公尺）
+        total_count:
+          type: integer
+          description: 總結果數量
+        locale:
+          type: string
+          example: "zh-TW"
+        emergency_numbers:
+          type: array
+          description: 緊急聯絡電話
+          items:
+            type: string
+        emergency_reminder:
+          type: string
+          description: 緊急提醒訊息
+        search_method:
+          type: string
+          description: 搜尋方式
+          enum: ["coordinates", "address", "ip"]
+        emergency_info:
+          $ref: '#/components/schemas/EmergencyInfo'
+        medical_disclaimer:
+          type: string
+          description: 醫療免責聲明
+        privacy_notice:
+          type: string
+          description: 隱私保護聲明
+
+    HospitalInfo:
+      type: object
+      required:
+        - id
+        - name
+        - address
+        - latitude
+        - longitude
+        - distance_meters
+      properties:
+        id:
+          type: string
+          description: 醫院唯一識別碼
+          example: "ChIJN1t_tDeuEmsRUsoyG83frY4"
+        name:
+          type: string
+          description: 醫院名稱
+          example: "台大醫院"
+        address:
+          type: string
+          description: 醫院地址
+          example: "台北市中正區中山南路7號"
+        latitude:
+          type: number
+          format: double
+          description: 緯度
+        longitude:
+          type: number
+          format: double
+          description: 經度
+        distance_meters:
+          type: integer
+          description: 距離（公尺）
+          example: 850
+        phone:
+          type: string
+          description: 聯絡電話
+          example: "02-23123456"
+        rating:
+          type: number
+          format: double
+          description: Google 評分
+          minimum: 1
+          maximum: 5
+          example: 4.2
+        is_open_now:
+          type: boolean
+          description: 目前是否營業
+        opening_hours:
+          type: array
+          description: 營業時間
+          items:
+            type: string
+        business_status:
+          type: string
+          description: 營業狀態
+          enum: ["OPERATIONAL", "CLOSED_TEMPORARILY", "CLOSED_PERMANENTLY", "UNKNOWN"]
+        nhia_info:
+          $ref: '#/components/schemas/NHIAInfo'
+
+    NHIAInfo:
+      type: object
+      description: 健保特約資訊
+      properties:
+        is_contracted:
+          type: boolean
+          description: 是否為健保特約院所
+        specialties:
+          type: array
+          description: 專科項目
+          items:
+            type: string
+        level:
+          type: string
+          description: 醫院層級
+          enum: ["醫學中心", "區域醫院", "地區醫院", "診所"]
+        emergency_services:
+          type: boolean
+          description: 是否提供急診服務
+
+    EmergencyInfo:
+      type: object
+      required:
+        - is_emergency
+        - emergency_message
+      properties:
+        is_emergency:
+          type: boolean
+          description: 是否為緊急狀況
+        detected_symptoms:
+          type: array
+          description: 偵測到的症狀
+          items:
+            type: string
+        emergency_numbers:
+          type: object
+          description: 緊急聯絡號碼
+          additionalProperties:
+            type: string
+        emergency_message:
+          type: string
+          description: 緊急訊息
+
+    EmergencyResponse:
+      type: object
+      required:
+        - numbers
+        - updated_at
+        - locale
+        - source
+        - disclaimer
+        - usage_notes
+      properties:
+        numbers:
+          type: array
+          description: 急救號碼列表
+          items:
+            $ref: '#/components/schemas/EmergencyNumber'
+        updated_at:
+          type: string
+          format: date-time
+          description: 更新時間
+        locale:
+          type: string
+          example: "zh-TW"
+        source:
+          type: string
+          description: 資料來源
+        disclaimer:
+          type: string
+          description: 免責聲明
+        usage_notes:
+          type: array
+          description: 使用注意事項
+          items:
+            type: string
+
+    EmergencyNumber:
+      type: object
+      required:
+        - code
+        - description
+        - category
+      properties:
+        code:
+          type: string
+          description: 急救號碼
+          example: "119"
+        description:
+          type: string
+          description: 號碼說明
+          example: "消防救護專線"
+        category:
+          type: string
+          description: 分類
+          example: "緊急救護"
+        available:
+          type: string
+          description: 服務時間
+          default: "24小時"
+        coverage:
+          type: string
+          description: 服務範圍
+          default: "全台灣"
+
+    HealthTopicsResponse:
+      type: object
+      required:
+        - topics
+        - total_count
+        - locale
+      properties:
+        topics:
+          type: array
+          description: 健康主題列表
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              title:
+                type: string
+              summary:
+                type: string
+              category:
+                type: string
+        total_count:
+          type: integer
+          description: 主題總數
+        locale:
+          type: string
+          example: "zh-TW"
+
+    DetailedHealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+        - checks
+      properties:
+        status:
+          type: string
+          description: 整體狀態
+          enum: ["healthy", "degraded", "unhealthy"]
+        timestamp:
+          type: string
+          format: date-time
+          description: 檢查時間
+        checks:
+          type: object
+          description: 各項檢查結果
+          additionalProperties:
+            type: object
+            properties:
+              status:
+                type: string
+                enum: ["pass", "fail", "warn"]
+              message:
+                type: string
+              response_time_ms:
+                type: number
+        overall_status:
+          type: string
+          description: 整體狀態描述
+        system_info:
+          type: object
+          description: 系統資訊
+          properties:
+            version:
+              type: string
+            environment:
+              type: string
+            uptime_seconds:
+              type: number
+
+    # ========== 錯誤模型 ==========
+    Error:
+      type: object
+      required:
+        - detail
+      properties:
+        detail:
+          type: string
+          description: 錯誤詳情
+          example: "Invalid request parameters"
+        error_code:
+          type: string
+          description: 錯誤代碼
+        timestamp:
+          type: string
+          format: date-time
+          description: 錯誤發生時間
+
+    ValidationError:
+      type: object
+      required:
+        - detail
+      properties:
+        detail:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: object
+                properties:
+                  loc:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: integer
+                  msg:
+                    type: string
+                  type:
+                    type: string
+
+  # ========== 安全性 ==========
+  securitySchemes:
+    RateLimiting:
+      type: apiKey
+      description: |
+        API 速率限制機制
+        - 預設限制：每分鐘100次請求
+        - 緊急評估：每分鐘20次請求
+        - 超出限制將回傳429狀態碼
+      name: X-RateLimit-Limit
+      in: header
+
+  # ========== 回應標頭 ==========
+  headers:
+    X-Request-Id:
+      description: 請求唯一識別碼，用於追蹤和除錯
+      schema:
+        type: string
+        example: "req_abc123def456"
+    X-RateLimit-Limit:
+      description: 速率限制上限
+      schema:
+        type: integer
+        example: 100
+    X-RateLimit-Remaining:
+      description: 剩餘請求次數
+      schema:
+        type: integer
+        example: 95
+    X-Response-Time:
+      description: 回應時間（毫秒）
+      schema:
+        type: number
+        example: 250.5
+
+# ========== 全域安全性 ==========
+security:
+  - RateLimiting: []
+
+# ========== 外部文件 ==========
+externalDocs:
+  description: 台灣醫療 AI 助理完整文件
+  url: https://docs.taiwan-med-ai.tw

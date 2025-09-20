@@ -12,6 +12,7 @@ import os
 import pytest
 from unittest.mock import patch
 from pydantic import ValidationError
+from pydantic_core import ValidationError as PydanticCoreValidationError
 from app.config import Settings, get_settings
 
 
@@ -23,8 +24,14 @@ class TestConfigurationSettings:
         # 清除可能存在的環境變數
         monkeypatch.delenv("GOOGLE_PLACES_API_KEY", raising=False)
 
-        # 驗證缺少必要的 API KEY 時會拋出例外
-        with pytest.raises(ValidationError) as exc_info:
+        # 重定向到一個不存在的 .env 檔案以避免載入現有的 .env
+        monkeypatch.chdir("/tmp" if os.name != 'nt' else "C:\\Windows\\Temp")
+
+        # 清除 lru_cache 以確保重新載入
+        get_settings.cache_clear()
+
+        # 驗證缺少必要的 API KEY 時會拋出例外 (支援 Pydantic v1 和 v2)
+        with pytest.raises((ValidationError, PydanticCoreValidationError)) as exc_info:
             Settings()
 
         # 驗證例外訊息內容
@@ -38,6 +45,9 @@ class TestConfigurationSettings:
         test_api_key = "test_google_places_api_key_12345"
         monkeypatch.setenv("GOOGLE_PLACES_API_KEY", test_api_key)
 
+        # 清除 lru_cache 以確保重新載入
+        get_settings.cache_clear()
+
         settings = Settings()
         assert settings.google_places_api_key == test_api_key
 
@@ -47,6 +57,9 @@ class TestConfigurationSettings:
         monkeypatch.setenv("GOOGLE_PLACES_API_KEY", "test_key")
         # 確保沒有覆寫預設語言
         monkeypatch.delenv("DEFAULT_LANG", raising=False)
+
+        # 清除 lru_cache 以確保重新載入
+        get_settings.cache_clear()
 
         settings = Settings()
         assert settings.default_lang == "zh-TW"
@@ -58,6 +71,9 @@ class TestConfigurationSettings:
         # 確保沒有覆寫預設地區
         monkeypatch.delenv("REGION", raising=False)
 
+        # 清除 lru_cache 以確保重新載入
+        get_settings.cache_clear()
+
         settings = Settings()
         assert settings.region == "TW"
 
@@ -67,6 +83,9 @@ class TestConfigurationSettings:
         monkeypatch.setenv("GOOGLE_PLACES_API_KEY", "test_key")
         monkeypatch.setenv("DEFAULT_LANG", "en-US")
 
+        # 清除 lru_cache 以確保重新載入
+        get_settings.cache_clear()
+
         settings = Settings()
         assert settings.default_lang == "en-US"
 
@@ -75,6 +94,9 @@ class TestConfigurationSettings:
         # 設定必要的 API KEY 和自訂地區
         monkeypatch.setenv("GOOGLE_PLACES_API_KEY", "test_key")
         monkeypatch.setenv("REGION", "US")
+
+        # 清除 lru_cache 以確保重新載入
+        get_settings.cache_clear()
 
         settings = Settings()
         assert settings.region == "US"
@@ -90,6 +112,9 @@ class TestConfigurationSettings:
 
         for key, value in test_values.items():
             monkeypatch.setenv(key, value)
+
+        # 清除 lru_cache 以確保重新載入
+        get_settings.cache_clear()
 
         settings = Settings()
         assert settings.google_places_api_key == test_values["GOOGLE_PLACES_API_KEY"]
@@ -129,6 +154,9 @@ REGION=KR
         # 切換到臨時目錄
         monkeypatch.chdir(tmp_path)
 
+        # 清除 lru_cache 以確保重新載入
+        get_settings.cache_clear()
+
         # 清除環境變數，確保從 .env 讀取
         monkeypatch.delenv("GOOGLE_PLACES_API_KEY", raising=False)
         monkeypatch.delenv("DEFAULT_LANG", raising=False)
@@ -143,6 +171,9 @@ REGION=KR
         """測試 API KEY 格式驗證（如果有的話）"""
         # 設定空字串的 API KEY
         monkeypatch.setenv("GOOGLE_PLACES_API_KEY", "")
+
+        # 清除 lru_cache 以確保重新載入
+        get_settings.cache_clear()
 
         with pytest.raises(ValueError) as exc_info:
             Settings()
@@ -160,6 +191,9 @@ REGION=KR
         env_vars_to_clear = ["DEFAULT_LANG", "REGION"]
         for var in env_vars_to_clear:
             monkeypatch.delenv(var, raising=False)
+
+        # 清除 lru_cache 以確保重新載入
+        get_settings.cache_clear()
 
         settings = Settings()
 

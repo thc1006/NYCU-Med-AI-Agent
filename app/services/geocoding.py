@@ -416,8 +416,8 @@ def geocode_with_fallback(
                 "source": "geocoding",
                 "accuracy": "precise",
                 "location": {
-                    "lat": result.lat,
-                    "lng": result.lng
+                    "lat": result.latitude,
+                    "lng": result.longitude
                 },
                 "formatted_address": result.formatted_address
             }
@@ -433,8 +433,8 @@ def geocode_with_fallback(
                     "source": "ip_fallback",
                     "accuracy": "approximate",
                     "location": {
-                        "lat": ip_result.lat,
-                        "lng": ip_result.lng
+                        "lat": ip_result.latitude,
+                        "lng": ip_result.longitude
                     },
                     "city": ip_result.city,
                     "approximate_warning": "位置為概略估計，可能與實際位置有差異"
