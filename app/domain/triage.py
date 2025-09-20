@@ -167,6 +167,16 @@ def combine_with_llm(rule_result: TriageResult, llm_result: Optional[TriageResul
     )
 
 
+def get_advice_for_level(level: TriageLevel) -> str:
+    """根據分級等級返回建議"""
+    if level == TriageLevel.EMERGENCY:
+        return get_emergency_advice()
+    elif level == TriageLevel.OUTPATIENT:
+        return get_outpatient_advice()
+    else:
+        return get_self_care_advice()
+
+
 def triage_with_fallback(query: SymptomQuery) -> Dict[str, Any]:
     """
     症狀分級（含降級機制）
@@ -209,3 +219,34 @@ def triage_with_fallback(query: SymptomQuery) -> Dict[str, Any]:
             "service_notice": "服務降級，僅提供基本判斷",
             "triage_result": basic_result
         }
+
+
+class TriageSystem:
+    """症狀分級系統包裝類別"""
+
+    def assess_symptoms(self, symptoms: List[str]) -> Any:
+        """
+        評估症狀並返回分級結果
+
+        Args:
+            symptoms: 症狀列表
+
+        Returns:
+            分級結果物件，包含 is_red_flag 屬性
+        """
+        # 將症狀列表轉換為文字
+        symptom_text = "、".join(symptoms)
+        query = SymptomQuery(symptom_text=symptom_text)
+
+        # 執行分級
+        result = rule_triage(query)
+
+        # 添加 is_red_flag 屬性
+        class TriageAssessment:
+            def __init__(self, result):
+                self.result = result
+                self.is_red_flag = result.level == TriageLevel.EMERGENCY
+                self.level = result.level
+                self.detected_symptoms = result.detected_symptoms
+
+        return TriageAssessment(result)

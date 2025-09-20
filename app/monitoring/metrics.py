@@ -701,6 +701,22 @@ class BusinessMetrics:
         )
         self.registry.register(self.user_satisfaction_histogram)
 
+        # Task 21: Emergency search counter
+        self.emergency_searches_total = Counter(
+            "emergency_searches_total",
+            "Total emergency searches triggered by red-flag symptoms",
+            labels=["symptom_type"]
+        )
+        self.registry.register(self.emergency_searches_total)
+
+        # Task 22: Red-flag detection timing histogram
+        self.red_flag_detection_duration_seconds = Histogram(
+            "red_flag_detection_duration_seconds",
+            "Time taken to detect red-flag symptoms in seconds",
+            buckets=[0.001, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0, 2.0]
+        )
+        self.registry.register(self.red_flag_detection_duration_seconds)
+
     def track_triage_request(self, level: str, symptom_category: str, duration_seconds: float):
         """Track triage request metrics."""
         self.triage_requests_counter.inc(labels={"level": level})
@@ -719,6 +735,15 @@ class BusinessMetrics:
     def track_user_satisfaction(self, score: int):
         """Track user satisfaction metrics."""
         self.user_satisfaction_histogram.observe(score)
+
+    def track_emergency_search(self, symptoms: List[str]):
+        """Track emergency search triggered by symptoms."""
+        symptom_type = ",".join(sorted(symptoms[:3]))  # Track first 3 symptoms
+        self.emergency_searches_total.inc(labels={"symptom_type": symptom_type})
+
+    def track_red_flag_detection(self, duration_seconds: float):
+        """Track time taken to detect red-flag symptoms."""
+        self.red_flag_detection_duration_seconds.observe(duration_seconds)
 
     def get_metrics(self) -> Dict[str, Union[Counter, Gauge, Histogram, Summary]]:
         """Get all business metrics."""

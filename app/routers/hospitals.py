@@ -5,14 +5,32 @@
 """
 
 from typing import Optional, List, Dict, Any
+import time
 from fastapi import APIRouter, Query, HTTPException, Request
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator, Field
 from app.services.geocoding import ip_geolocate, geocode_address, GeocodeResult
 from app.services.places import nearby_hospitals, format_hospital_results
 from app.services.nhia_registry import enhance_places_with_nhia_info
 from app.config import get_settings
+from app.domain.triage import TriageSystem
+from app.monitoring.metrics import metrics_collector
 
 router = APIRouter(prefix="/v1/hospitals", tags=["醫院搜尋"])
+
+# Medical disclaimer constants
+MEDICAL_DISCLAIMERS = {
+    "general": "⚠️ 本服務僅供參考，不能取代專業醫療診斷。如有緊急狀況，請立即撥打119。",
+    "emergency": "🆘 緊急狀況！請立即撥打119救護車或前往最近的急診室。本服務僅供參考，不能取代專業醫療診斷。",
+    "privacy": "您的位置資訊僅用於搜尋附近醫院，不會被儲存或分享。"
+}
+
+
+class EmergencyInfo(BaseModel):
+    """緊急資訊模型"""
+    is_emergency: bool = Field(..., description="是否為緊急狀況")
+    detected_symptoms: List[str] = Field(default_factory=list, description="偵測到的症狀")
+    emergency_numbers: Dict[str, str] = Field(default_factory=dict, description="緊急聯絡號碼")
+    emergency_message: str = Field(..., description="緊急訊息")
 
 
 class HospitalSearchRequest(BaseModel):
@@ -23,26 +41,31 @@ class HospitalSearchRequest(BaseModel):
     use_ip: bool = False
     radius: int = 3000
     max_results: int = 20
+    symptoms: Optional[List[str]] = Field(None, description="症狀描述列表")
 
-    @validator('latitude')
+    @field_validator('latitude')
+    @classmethod
     def validate_latitude(cls, v):
         if v is not None and not (-90 <= v <= 90):
             raise ValueError('Latitude must be between -90 and 90')
         return v
 
-    @validator('longitude')
+    @field_validator('longitude')
+    @classmethod
     def validate_longitude(cls, v):
         if v is not None and not (-180 <= v <= 180):
             raise ValueError('Longitude must be between -180 and 180')
         return v
 
-    @validator('radius')
+    @field_validator('radius')
+    @classmethod
     def validate_radius(cls, v):
         if not (100 <= v <= 50000):
             raise ValueError('Radius must be between 100 and 50000 meters')
         return v
 
-    @validator('max_results')
+    @field_validator('max_results')
+    @classmethod
     def validate_max_results(cls, v):
         if not (1 <= v <= 50):
             raise ValueError('Max results must be between 1 and 50')
@@ -51,7 +74,8 @@ class HospitalSearchRequest(BaseModel):
 
 class HospitalSearchResponse(BaseModel):
     """醫院搜尋回應模型"""
-    results: List[Dict[str, Any]]
+    results: List[Dict[str, Any]]  # Keep original name for backward compatibility
+    hospitals: Optional[List[Dict[str, Any]]] = None  # Added for new tests
     search_center: Dict[str, float]
     search_radius: int
     total_count: int
@@ -59,6 +83,9 @@ class HospitalSearchResponse(BaseModel):
     emergency_numbers: List[str]
     emergency_reminder: str
     search_method: str  # "coordinates", "address", "ip"
+    emergency_info: Optional[EmergencyInfo] = None
+    medical_disclaimer: str = Field(default=MEDICAL_DISCLAIMERS["general"])
+    privacy_notice: str = Field(default=MEDICAL_DISCLAIMERS["privacy"])
 
 
 def get_client_ip(request: Request) -> str:
@@ -92,7 +119,8 @@ async def search_nearby_hospitals(
     use_ip: bool = Query(False, description="使用IP定位 (最低優先級)"),
     radius: int = Query(3000, description="搜尋半徑 (公尺)", ge=100, le=50000),
     max_results: int = Query(20, description="最大結果數量", ge=1, le=50),
-    include_nhia: bool = Query(True, description="是否包含健保特約資訊")
+    include_nhia: bool = Query(True, description="是否包含健保特約資訊"),
+    symptoms: Optional[List[str]] = Query(None, description="症狀描述列表")
 ) -> HospitalSearchResponse:
     """
     搜尋就近醫療院所
@@ -108,6 +136,41 @@ async def search_nearby_hospitals(
     settings = get_settings()
     search_method = ""
     search_center = {}
+    emergency_info = None
+    adjusted_radius = radius
+
+    # 症狀評估與緊急檢測
+    if symptoms is not None and len(symptoms) > 0:
+        # Task 23: Record metrics for symptom processing
+        detection_start = time.time()
+
+        triage_system = TriageSystem()
+        assessment = triage_system.assess_symptoms(symptoms)
+
+        # Record red-flag detection timing
+        detection_duration = time.time() - detection_start
+        if hasattr(metrics_collector, 'business_metrics'):
+            metrics_collector.business_metrics.track_red_flag_detection(detection_duration)
+
+        # 檢查是否有紅旗症狀
+        if assessment.is_red_flag:
+            # Track emergency search counter
+            if hasattr(metrics_collector, 'business_metrics'):
+                metrics_collector.business_metrics.track_emergency_search(symptoms)
+
+            # 建立緊急資訊
+            emergency_info = EmergencyInfo(
+                is_emergency=True,
+                detected_symptoms=symptoms,
+                emergency_numbers={
+                    "119": "緊急醫療救護",
+                    "112": "手機緊急號碼",
+                    "110": "警察報案"
+                },
+                emergency_message="🆘 偵測到緊急症狀！請立即撥打119或前往最近的急診室。"
+            )
+            # 緊急狀況限制搜尋半徑為3公里
+            adjusted_radius = min(radius, 3000)
 
     # 第一優先：直接座標
     if latitude is not None and longitude is not None:
@@ -174,9 +237,24 @@ async def search_nearby_hospitals(
         places_results = nearby_hospitals(
             lat=search_center["latitude"],
             lng=search_center["longitude"],
-            radius=radius,
+            radius=adjusted_radius,  # 使用調整後的半徑
             max_results=max_results
         )
+
+        # 如果是緊急狀況，優先排序急診醫院
+        if emergency_info and emergency_info.is_emergency:
+            # 將含有"急診"的醫院排在前面
+            emergency_hospitals = []
+            regular_hospitals = []
+
+            for place in places_results:
+                if "急診" in place.name or "emergency" in getattr(place, 'types', []):
+                    emergency_hospitals.append(place)
+                else:
+                    regular_hospitals.append(place)
+
+            # 急診醫院在前，然後是一般醫院，都按距離排序
+            places_results = emergency_hospitals + regular_hospitals
 
         # 增強健保資訊（可選）
         if include_nhia:
@@ -217,8 +295,9 @@ async def search_nearby_hospitals(
     # 建構回應
     response = HospitalSearchResponse(
         results=enhanced_results,
+        hospitals=enhanced_results,  # Duplicate for new test compatibility
         search_center=search_center,
-        search_radius=radius,
+        search_radius=adjusted_radius,
         total_count=len(enhanced_results),
         locale="zh-TW",
         emergency_numbers=settings.emergency_numbers,
@@ -226,7 +305,10 @@ async def search_nearby_hospitals(
             "緊急情況請立即撥打 119（消防救護）或 110（警察）。"
             "本搜尋結果僅供參考，不可取代專業醫療判斷。"
         ),
-        search_method=search_method
+        search_method=search_method,
+        emergency_info=emergency_info,
+        medical_disclaimer=MEDICAL_DISCLAIMERS["emergency"] if emergency_info else MEDICAL_DISCLAIMERS["general"],
+        privacy_notice=MEDICAL_DISCLAIMERS["privacy"]
     )
 
     return response

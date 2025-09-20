@@ -54,6 +54,19 @@ def initialize_monitoring():
 
     structured_logger.info("Monitoring system initialized", config_keys=list(monitoring_config.keys()))
 
+# 使用 lifespan context manager 取代 on_event (FastAPI 0.95+)
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app_instance: FastAPI):
+    """Application lifespan management"""
+    # Startup
+    initialize_monitoring()
+    structured_logger.info("Taiwan Medical AI Assistant started")
+    yield
+    # Shutdown
+    structured_logger.info("Taiwan Medical AI Assistant shutting down")
+
 # 創建 FastAPI 應用程式實例
 app = FastAPI(
     title=settings.app_name if settings else "台灣醫療 AI 助理",
@@ -61,19 +74,8 @@ app = FastAPI(
     version=settings.app_version if settings else "0.1.0",
     docs_url="/docs",
     redoc_url="/redoc",
+    lifespan=lifespan
 )
-
-# 啟動事件
-@app.on_event("startup")
-async def startup_event():
-    """應用程式啟動時的初始化事件"""
-    initialize_monitoring()
-    structured_logger.info("Taiwan Medical AI Assistant started")
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """應用程式關閉時的清理事件"""
-    structured_logger.info("Taiwan Medical AI Assistant shutting down")
 
 # 添加監控中介層（按照執行順序）
 app.add_middleware(StructuredLoggingMiddleware)  # 最外層：結構化日誌

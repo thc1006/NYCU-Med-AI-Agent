@@ -6,7 +6,7 @@
 import os
 from functools import lru_cache
 from typing import Optional
-from pydantic import validator
+from pydantic import field_validator
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
 
@@ -16,6 +16,7 @@ class Settings(BaseSettings):
 
     # Google Places API 設定 (必填)
     google_places_api_key: str
+    google_geocoding_api_key: Optional[str] = None  # Optional geocoding API key
 
     # 台灣在地化設定
     default_lang: str = "zh-TW"  # 預設繁體中文
@@ -77,7 +78,8 @@ class Settings(BaseSettings):
             }
         ]
 
-    @validator("google_places_api_key")
+    @field_validator("google_places_api_key")
+    @classmethod
     def validate_google_places_api_key(cls, v):
         """驗證 Google Places API Key"""
         if not v:
@@ -92,37 +94,27 @@ class Settings(BaseSettings):
             )
         return v.strip()
 
-    @validator("default_lang")
+    @field_validator("default_lang")
+    @classmethod
     def validate_default_lang(cls, v):
         """驗證預設語言格式"""
         if not v:
             return "zh-TW"  # 台灣醫療系統預設繁體中文
         return v.strip()
 
-    @validator("region")
+    @field_validator("region")
+    @classmethod
     def validate_region(cls, v):
         """驗證地區設定"""
         if not v:
             return "TW"  # 台灣醫療系統預設台灣地區
         return v.strip().upper()
 
-    class Config:
-        """Pydantic 設定"""
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = False
-
-        # 環境變數對應
-        fields = {
-            "google_places_api_key": {"env": "GOOGLE_PLACES_API_KEY"},
-            "default_lang": {"env": "DEFAULT_LANG"},
-            "region": {"env": "REGION"},
-            "app_name": {"env": "APP_NAME"},
-            "app_version": {"env": "APP_VERSION"},
-            "debug": {"env": "DEBUG"},
-            "api_host": {"env": "API_HOST"},
-            "api_port": {"env": "API_PORT"},
-        }
+    model_config = {
+        "env_file": ".env",
+        "env_file_encoding": "utf-8",
+        "case_sensitive": False
+    }
 
 
 @lru_cache()
