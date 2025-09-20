@@ -16,7 +16,7 @@
     }
   ],
   "env": {
-    "REACT_APP_API_BASE_URL": "@react_app_api_base_url"
+    "REACT_APP_API_BASE_URL": "https://thc1006.pythonanywhere.com"
   },
   "buildCommand": "cd frontend && npm ci && npm run build",
   "outputDirectory": "frontend/build",

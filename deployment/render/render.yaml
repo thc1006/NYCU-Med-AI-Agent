@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: taiwan-med-ai-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "false"
+      - key: DEFAULT_LANG
+        value: zh-TW
+      - key: REGION
+        value: TW
+      - key: GOOGLE_PLACES_API_KEY
+        sync: false  # 需要在 Render 控制台手動設定
+      - key: GOOGLE_GEOCODING_API_KEY
+        sync: false  # 需要在 Render 控制台手動設定

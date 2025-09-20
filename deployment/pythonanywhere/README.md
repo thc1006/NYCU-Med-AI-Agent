@@ -77,15 +77,15 @@ APP_VERSION=0.1.0
 ### 檢查 API 端點
 ```bash
 # 健康檢查
-curl https://yourusername.pythonanywhere.com/v1/monitoring/health
+curl https://thc1006.pythonanywhere.com/v1/monitoring/health
 
 # API 文檔
-https://yourusername.pythonanywhere.com/docs
+https://thc1006.pythonanywhere.com/docs
 ```
 
 ### 測試症狀分析
 ```bash
-curl -X POST "https://yourusername.pythonanywhere.com/v1/triage" \
+curl -X POST "https://thc1006.pythonanywhere.com/v1/triage" \
   -H "Content-Type: application/json" \
   -d '{"symptom_text": "頭痛發燒"}'
 ```

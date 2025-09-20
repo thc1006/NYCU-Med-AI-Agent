@@ -14,8 +14,8 @@ const getApiBaseUrl = (): string => {
 
   // 根據當前環境自動判斷
   if (process.env.NODE_ENV === 'production') {
-    // 生產環境：假設部署在 PythonAnywhere
-    return 'https://yourusername.pythonanywhere.com';
+    // 生產環境：部署在 PythonAnywhere
+    return 'https://thc1006.pythonanywhere.com';
   } else {
     // 開發環境：本地後端
     return 'http://localhost:8000';
