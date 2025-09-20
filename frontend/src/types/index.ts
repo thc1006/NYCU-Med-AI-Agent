@@ -132,9 +132,14 @@ export const LOCAL_STORAGE_KEYS = {
 
 // API 端點
 export const API_ENDPOINTS = {
+  TRIAGE: '/v1/triage',
   TRIAGE_QUICK: '/v1/triage/quick',
   HOSPITALS_NEARBY: '/v1/hospitals/nearby',
-  EMERGENCY_INFO: '/v1/hospitals/emergency-info'
+  HOSPITALS_EMERGENCY: '/v1/hospitals/emergency-info',
+  HEALTH_TOPICS: '/v1/healthinfo/topics',
+  HEALTH_RESOURCES: '/v1/healthinfo/resources',
+  HEALTH_CHECK: '/v1/monitoring/health',
+  METRICS: '/v1/monitoring/metrics'
 } as const;
 
 // 緊急電話清單

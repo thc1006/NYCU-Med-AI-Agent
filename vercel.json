@@ -2,10 +2,6 @@
   "version": 2,
   "builds": [
     {
-      "src": "app/main.py",
-      "use": "@vercel/python"
-    },
-    {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
@@ -15,16 +11,14 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "app/main.py"
-    },
-    {
       "src": "/(.*)",
       "dest": "frontend/build/$1"
     }
   ],
   "env": {
-    "GOOGLE_PLACES_API_KEY": "@google_places_api_key",
-    "GOOGLE_GEOCODING_API_KEY": "@google_geocoding_api_key"
-  }
+    "REACT_APP_API_BASE_URL": "@react_app_api_base_url"
+  },
+  "buildCommand": "cd frontend && npm ci && npm run build",
+  "outputDirectory": "frontend/build",
+  "installCommand": "cd frontend && npm ci"
 }

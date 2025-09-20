@@ -10,11 +10,12 @@ import {
   EmergencyInfo,
   API_ENDPOINTS
 } from '../types';
+import { API_CONFIG } from '../config/api';
 
 // 建立 axios 實例
 const api = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:8000',
-  timeout: 15000,
+  baseURL: API_CONFIG.BASE_URL,
+  timeout: API_CONFIG.TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -107,6 +108,22 @@ function getErrorMessage(error: any): string {
  */
 export const triageApi = {
   /**
+   * 完整症狀評估
+   */
+  async fullTriage(request: TriageRequest): Promise<TriageResponse> {
+    try {
+      const response = await api.post<TriageResponse>(
+        API_ENDPOINTS.TRIAGE,
+        request
+      );
+      return response.data;
+    } catch (error) {
+      console.error('[Full Triage API Error]', error);
+      throw error;
+    }
+  },
+
+  /**
    * 快速症狀評估
    */
   async quickTriage(request: TriageRequest): Promise<TriageResponse> {
@@ -117,7 +134,7 @@ export const triageApi = {
       );
       return response.data;
     } catch (error) {
-      console.error('[Triage API Error]', error);
+      console.error('[Quick Triage API Error]', error);
       throw error;
     }
   }
@@ -161,7 +178,7 @@ export const hospitalApi = {
    */
   async getEmergencyInfo(): Promise<EmergencyInfo> {
     try {
-      const response = await api.get<EmergencyInfo>(API_ENDPOINTS.EMERGENCY_INFO);
+      const response = await api.get<EmergencyInfo>(API_ENDPOINTS.HOSPITALS_EMERGENCY);
       return response.data;
     } catch (error) {
       console.error('[Emergency Info API Error]', error);
