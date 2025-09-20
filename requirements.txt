@@ -15,5 +15,14 @@ pydantic-settings>=2.1.0
 # 環境變數管理
 python-dotenv>=1.0.0
 
+# 系統監控
+psutil>=5.9.0
+
+# 檔案上傳與表單處理
+python-multipart>=0.0.6
+
+# 靜態檔案服務
+aiofiles>=23.2.1
+
 # 開發與測試依賴（可選安裝）
 # pip install -r requirements-dev.txt
