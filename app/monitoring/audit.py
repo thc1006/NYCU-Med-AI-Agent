@@ -228,11 +228,10 @@ class EncryptedAuditStorage(AuditStorageBackend):
         json_str = bytes(decrypted).decode('utf-8')
         return json.loads(json_str)
 
-    def _write_encrypted_data(self, data: Dict[str, Any], file_path: Path):
+    def _write_encrypted_data(self, data: bytes, file_path: Path):
         """Write encrypted data to file."""
         with gzip.open(file_path, 'wb') as f:
-            json_data = json.dumps(data, ensure_ascii=False).encode('utf-8')
-            f.write(json_data)
+            f.write(data)
 
     def _read_encrypted_data(self, file_path: Path) -> bytes:
         """Read encrypted data from file."""

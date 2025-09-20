@@ -1,4 +1,4 @@
-# 台灣醫療 AI 助理 (Taiwan Medical AI Assistant)
+# 🏥 台灣醫療 AI 助理系統 (Taiwan Medical AI Assistant)
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
@@ -9,9 +9,15 @@
 > 🏥 **專為台灣醫療環境設計的智能 AI 助理系統**
 > A Taiwan-localized medical AI assistant designed for the local healthcare environment
 
-一個結合症狀分析、醫療院所搜尋、緊急分流的台灣在地化醫療 AI 助理系統，具備完整的監控、審計與 PDPA 合規功能。
+專為台灣醫療環境設計的 AI 助理系統，結合現代化 React 前端與 FastAPI 後端，提供症狀評估、醫院搜尋、緊急醫療指引等功能。具備玻璃效果設計的直觀介面與完整的監控、審計與 PDPA 合規功能。
 
 ## 🌟 主要特色 (Key Features)
+
+### 🎨 現代化前端介面
+- **React 18 + TypeScript**：完整的現代前端架構
+- **玻璃效果設計**：優雅的視覺體驗與直觀操作
+- **PWA 支援**：可安裝的 Web 應用程式
+- **響應式設計**：完美支援手機與桌面裝置
 
 ### 🇹🇼 台灣在地化 (Taiwan Localization)
 - **繁體中文優先**：完整支援正體中文介面與回應
@@ -30,6 +36,15 @@
 - **即時健康監控**：API 健康狀態與效能監控
 - **度量分析**：詳細的使用統計與效能分析
 - **速率限制**：防止濫用的智能限流機制
+
+## 📊 專案統計
+
+- **程式碼行數**：33,266 行 Python 程式碼
+- **測試覆蓋率**：80%+
+- **API 端點**：11 個 RESTful 端點
+- **測試案例**：625 個測試函數
+- **支援症狀**：60 個症狀關鍵字
+- **前端元件**：React + TypeScript 現代化架構
 
 ## 🚀 快速開始 (Quick Start)
 

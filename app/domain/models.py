@@ -5,7 +5,7 @@
 
 from enum import Enum
 from typing import List, Optional, Dict, Any
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator, Field
 
 
 class TriageLevel(str, Enum):
@@ -25,20 +25,23 @@ class SymptomQuery(BaseModel):
     has_chronic_disease: bool = False
     medications: List[str] = []
 
-    @validator('symptom_text')
+    @field_validator('symptom_text')
+    @classmethod
     def validate_symptom_text(cls, v):
         # Allow empty string for testing
         if v is None:
             return ""
         return v.strip()
 
-    @validator('age')
+    @field_validator('age')
+    @classmethod
     def validate_age(cls, v):
         if v is not None and (v < 0 or v > 150):
             raise ValueError('Age must be between 0 and 150')
         return v
 
-    @validator('gender')
+    @field_validator('gender')
+    @classmethod
     def validate_gender(cls, v):
         if v and v.upper() not in ['M', 'F', 'O', None]:
             raise ValueError('Gender must be M, F, O, or None')
@@ -57,7 +60,8 @@ class TriageResult(BaseModel):
     estimated_wait_time: Optional[str] = None
     confidence_score: Optional[float] = None
 
-    @validator('confidence_score')
+    @field_validator('confidence_score')
+    @classmethod
     def validate_confidence(cls, v):
         if v is not None and not (0.0 <= v <= 1.0):
             raise ValueError('Confidence score must be between 0 and 1')
@@ -101,8 +105,8 @@ class TriageRequest(BaseModel):
     include_nearby_hospitals: bool = False
     location: Optional[Dict[str, float]] = None
 
-    class Config:
-        schema_extra = {
+    model_config = {
+        "json_schema_extra": {
             "example": {
                 "symptom_text": "胸痛、呼吸困難",
                 "age": 45,
@@ -114,6 +118,7 @@ class TriageRequest(BaseModel):
                 "location": {"latitude": 25.0339, "longitude": 121.5645}
             }
         }
+    }
 
 
 class TriageResponse(BaseModel):
@@ -132,8 +137,8 @@ class TriageResponse(BaseModel):
     timestamp: str
     locale: str = "zh-TW"
 
-    class Config:
-        schema_extra = {
+    model_config = {
+        "json_schema_extra": {
             "example": {
                 "triage_level": "emergency",
                 "advice": "您的症狀屬於緊急狀況，請立即撥打119或前往最近的急診室。",
@@ -153,3 +158,4 @@ class TriageResponse(BaseModel):
                 "locale": "zh-TW"
             }
         }
+    }

@@ -16,6 +16,7 @@ class Settings(BaseSettings):
 
     # Google Places API 設定 (必填)
     google_places_api_key: str
+    google_geocoding_api_key: Optional[str] = None  # Optional geocoding API key
 
     # 台灣在地化設定
     default_lang: str = "zh-TW"  # 預設繁體中文

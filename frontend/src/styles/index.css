@@ -1,0 +1,857 @@
+/* 台灣醫療 AI 助手 - 現代化玻璃擬態設計 */
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Google Fonts 導入 */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* 基礎樣式 */
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html {
+    @apply antialiased scroll-smooth;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  body {
+    @apply min-h-screen font-sans;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 25%, #f0fdf9 50%, #fef7f0 100%);
+    background-attachment: fixed;
+    font-family: 'Inter', 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+  }
+
+  /* 現代化中文字體優化 */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold;
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl lg:text-4xl;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl lg:text-3xl;
+  }
+
+  /* 現代化輸入元件樣式 */
+  input, textarea, select {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    @apply outline-none ring-2 ring-brand-500/30 ring-offset-2 ring-offset-white/50;
+  }
+
+  /* 現代化按鈕基礎樣式 */
+  button {
+    @apply transition-all duration-300 ease-out transform;
+  }
+
+  button:hover {
+    @apply scale-105;
+  }
+
+  button:active {
+    @apply scale-95;
+  }
+
+  button:disabled {
+    @apply cursor-not-allowed opacity-40 transform-none hover:scale-100;
+  }
+
+  /* 自定義捲軸 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-glass-light backdrop-blur-sm rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand-400/60 rounded-full;
+    backdrop-filter: blur(10px);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-500/80;
+  }
+}
+
+/* 現代化元件樣式 */
+@layer components {
+  /* 玻璃擬態主要按鈕 */
+  .btn-primary {
+    @apply relative px-8 py-4 rounded-2xl font-semibold text-white overflow-hidden;
+    background: linear-gradient(135deg, #0891b2 0%, #06b6d4 50%, #14b8a6 100%);
+    backdrop-filter: blur(10px);
+    box-shadow:
+      0 8px 32px 0 rgba(8, 145, 178, 0.3),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-primary::before {
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    content: '';
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+  }
+
+  .btn-primary:hover::before {
+    @apply opacity-100;
+  }
+
+  .btn-primary:hover {
+    box-shadow:
+      0 12px 40px 0 rgba(8, 145, 178, 0.4),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+  }
+
+  /* 玻璃擬態次要按鈕 */
+  .btn-secondary {
+    @apply relative px-6 py-3 rounded-xl font-medium text-gray-700 overflow-hidden;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-secondary:hover {
+    @apply text-brand-700;
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 6px 25px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  /* 緊急按鈕 - 脈動光暈效果 */
+  .btn-emergency {
+    @apply relative px-8 py-4 rounded-2xl font-bold text-lg text-white overflow-hidden animate-pulse-glow;
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #f87171 100%);
+    box-shadow:
+      0 0 30px rgba(220, 38, 38, 0.6),
+      0 8px 32px 0 rgba(220, 38, 38, 0.3);
+  }
+
+  .btn-emergency::before {
+    @apply absolute inset-0;
+    content: '';
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+  }
+
+  .btn-emergency:hover::before {
+    transform: translateX(100%);
+  }
+
+  /* 玻璃擬態卡片 */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+      0 8px 32px 0 rgba(31, 38, 135, 0.15),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow:
+      0 12px 40px 0 rgba(31, 38, 135, 0.2),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+  }
+
+  /* 現代化輸入欄位 */
+  .input-glass {
+    @apply w-full px-4 py-3 rounded-xl font-medium text-gray-800 placeholder-gray-500;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow:
+      0 4px 20px 0 rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .input-glass:focus {
+    @apply ring-2 ring-brand-400/50 ring-offset-2 ring-offset-transparent;
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(8, 145, 178, 0.3);
+  }
+
+  .input-glass::placeholder {
+    @apply text-gray-500/70;
+  }
+
+  /* 現代化標籤樣式 */
+  .badge-glass {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .badge-emergency {
+    @apply badge-glass text-red-800;
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.3);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+  }
+
+  .badge-urgent {
+    @apply badge-glass text-orange-800;
+    background: rgba(249, 115, 22, 0.2);
+    border-color: rgba(249, 115, 22, 0.3);
+  }
+
+  .badge-moderate {
+    @apply badge-glass text-yellow-800;
+    background: rgba(245, 158, 11, 0.2);
+    border-color: rgba(245, 158, 11, 0.3);
+  }
+
+  .badge-low {
+    @apply badge-glass text-green-800;
+    background: rgba(34, 197, 94, 0.2);
+    border-color: rgba(34, 197, 94, 0.3);
+  }
+
+  .badge-info {
+    @apply badge-glass text-brand-800;
+    background: rgba(8, 145, 178, 0.2);
+    border-color: rgba(8, 145, 178, 0.3);
+  }
+
+  /* 現代化載入動畫 */
+  .loading-modern {
+    @apply inline-block relative;
+    width: 40px;
+    height: 40px;
+  }
+
+  .loading-modern::before {
+    content: '';
+    @apply absolute inset-0 rounded-full;
+    background: conic-gradient(transparent, rgba(8, 145, 178, 0.8));
+    animation: spin 1s linear infinite;
+  }
+
+  .loading-modern::after {
+    content: '';
+    @apply absolute inset-1 rounded-full;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+  }
+
+  /* 玻璃分割線 */
+  .divider-glass {
+    @apply my-6 border-0 h-px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  }
+
+  /* 現代化容器 */
+  .container-glass {
+    @apply max-w-md mx-auto px-4;
+  }
+
+  @media (min-width: 768px) {
+    .container-glass {
+      @apply max-w-2xl;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-glass {
+      @apply max-w-4xl;
+    }
+  }
+
+  /* 浮動卡片效果 */
+  .floating-card {
+    @apply glass-card rounded-3xl p-6 animate-float;
+    box-shadow:
+      0 20px 40px -12px rgba(31, 38, 135, 0.25),
+      0 8px 16px -4px rgba(31, 38, 135, 0.1);
+  }
+
+  /* 緊急狀況樣式 - 現代化 */
+  .emergency-glass {
+    @apply glass-card border-red-400/50 animate-pulse-glow;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
+    box-shadow:
+      0 0 30px rgba(239, 68, 68, 0.3),
+      0 8px 32px 0 rgba(239, 68, 68, 0.2);
+  }
+
+  /* 症狀按鈕 - 玻璃擬態版本 */
+  .symptom-glass {
+    @apply px-4 py-3 text-sm font-medium rounded-xl transition-all duration-300 cursor-pointer;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .symptom-glass:hover {
+    @apply scale-105;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .symptom-glass.selected {
+    @apply text-white;
+    background: linear-gradient(135deg, #0891b2, #06b6d4);
+    box-shadow: 0 8px 25px rgba(8, 145, 178, 0.3);
+  }
+
+  .symptom-emergency {
+    @apply symptom-glass text-red-700;
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+  }
+
+  .symptom-emergency:hover {
+    background: rgba(239, 68, 68, 0.25);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.2);
+  }
+
+  /* 醫院卡片 - 現代化版本 */
+  .hospital-glass {
+    @apply glass-card rounded-2xl p-6 cursor-pointer transform transition-all duration-300;
+  }
+
+  .hospital-glass:hover {
+    @apply scale-105;
+    box-shadow:
+      0 20px 40px -12px rgba(31, 38, 135, 0.25),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .hospital-priority {
+    @apply hospital-glass;
+    background: linear-gradient(135deg, rgba(8, 145, 178, 0.1), rgba(6, 182, 212, 0.05));
+    border-color: rgba(8, 145, 178, 0.3);
+  }
+
+  /* 分級結果 - 玻璃擬態版本 */
+  .triage-glass {
+    @apply glass-card rounded-3xl overflow-hidden animate-scale-in;
+  }
+
+  /* 歷史記錄 - 現代化版本 */
+  .history-glass {
+    @apply glass-card rounded-xl p-4 cursor-pointer transition-all duration-300 mb-3;
+  }
+
+  .history-glass:hover {
+    @apply scale-102;
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  /* 固定底部按鈕 - 玻璃版本 */
+  .bottom-glass {
+    @apply fixed bottom-6 left-4 right-4 max-w-md mx-auto z-30;
+  }
+
+  /* 現代化 Toast 樣式 */
+  .toast-glass {
+    @apply backdrop-blur-lg rounded-2xl border text-white font-medium;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .toast-success {
+    @apply toast-glass;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(22, 163, 74, 0.8));
+    box-shadow: 0 8px 32px rgba(34, 197, 94, 0.3);
+  }
+
+  .toast-error {
+    @apply toast-glass;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.8));
+    box-shadow: 0 8px 32px rgba(239, 68, 68, 0.3);
+  }
+
+  .toast-warning {
+    @apply toast-glass;
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.9), rgba(234, 88, 12, 0.8));
+    box-shadow: 0 8px 32px rgba(249, 115, 22, 0.3);
+  }
+
+  .toast-info {
+    @apply toast-glass;
+    background: linear-gradient(135deg, rgba(8, 145, 178, 0.9), rgba(6, 182, 212, 0.8));
+    box-shadow: 0 8px 32px rgba(8, 145, 178, 0.3);
+  }
+
+  /* 特殊視覺效果 */
+  .glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow-pulse {
+    from {
+      box-shadow: 0 0 20px rgba(8, 145, 178, 0.3);
+    }
+    to {
+      box-shadow: 0 0 40px rgba(8, 145, 178, 0.6);
+    }
+  }
+
+  /* 微互動效果 */
+  .micro-interaction {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  .micro-interaction:hover {
+    @apply scale-105 brightness-110;
+  }
+
+  .micro-interaction:active {
+    @apply scale-95;
+  }
+
+  /* 文字漸層 */
+  .text-gradient {
+    background: linear-gradient(135deg, #0891b2, #06b6d4, #14b8a6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* 邊框漸層 */
+  .border-gradient {
+    background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+    border: 1px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .border-gradient::before {
+    content: '';
+    @apply absolute inset-0 -z-10 rounded-inherit;
+    background: linear-gradient(135deg, #0891b2, #06b6d4, #14b8a6);
+    margin: -1px;
+  }
+}
+
+/* 現代化工具樣式 */
+@layer utilities {
+  /* 隱藏滾動條但保持功能 */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 自定義滾動條 */
+  .scrollbar-glass {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(8, 145, 178, 0.3) transparent;
+  }
+
+  .scrollbar-glass::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-glass::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+
+  .scrollbar-glass::-webkit-scrollbar-thumb {
+    background: rgba(8, 145, 178, 0.3);
+    border-radius: 3px;
+  }
+
+  .scrollbar-glass::-webkit-scrollbar-thumb:hover {
+    background: rgba(8, 145, 178, 0.5);
+  }
+
+  /* 響應式字體大小 */
+  .text-adaptive {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+
+  .text-adaptive-sm {
+    @apply text-xs sm:text-sm lg:text-base;
+  }
+
+  .text-adaptive-lg {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+
+  /* 安全區域填充 */
+  .safe-top {
+    padding-top: max(env(safe-area-inset-top), 1rem);
+  }
+
+  .safe-bottom {
+    padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+  }
+
+  /* 現代化觸摸反饋 */
+  .touch-glass {
+    @apply transition-all duration-200 ease-out active:scale-95;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* 玻璃毛玻璃效果變體 */
+  .glass-light {
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .glass-medium {
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .glass-heavy {
+    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* 漸層遮罩 */
+  .mask-gradient-t {
+    mask-image: linear-gradient(to top, transparent, black);
+  }
+
+  .mask-gradient-b {
+    mask-image: linear-gradient(to bottom, transparent, black);
+  }
+
+  .mask-gradient-l {
+    mask-image: linear-gradient(to left, transparent, black);
+  }
+
+  .mask-gradient-r {
+    mask-image: linear-gradient(to right, transparent, black);
+  }
+
+  /* 視差效果 */
+  .parallax {
+    transform-style: preserve-3d;
+  }
+
+  .parallax-slow {
+    transform: translateZ(-1px) scale(2);
+  }
+
+  .parallax-fast {
+    transform: translateZ(1px) scale(0.5);
+  }
+
+  /* 現代化陰影層級 */
+  .shadow-glass-1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .shadow-glass-2 {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .shadow-glass-3 {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  .shadow-glass-4 {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  /* 模糊變體 */
+  .blur-xs { backdrop-filter: blur(2px); }
+  .blur-sm { backdrop-filter: blur(4px); }
+  .blur-md { backdrop-filter: blur(8px); }
+  .blur-lg { backdrop-filter: blur(12px); }
+  .blur-xl { backdrop-filter: blur(16px); }
+  .blur-2xl { backdrop-filter: blur(24px); }
+  .blur-3xl { backdrop-filter: blur(40px); }
+
+  /* 變換中心點 */
+  .transform-center {
+    transform-origin: center;
+  }
+
+  .transform-top {
+    transform-origin: top;
+  }
+
+  .transform-bottom {
+    transform-origin: bottom;
+  }
+
+  /* 混合模式 */
+  .mix-multiply { mix-blend-mode: multiply; }
+  .mix-screen { mix-blend-mode: screen; }
+  .mix-overlay { mix-blend-mode: overlay; }
+  .mix-darken { mix-blend-mode: darken; }
+  .mix-lighten { mix-blend-mode: lighten; }
+
+  /* 縮放比例 */
+  .scale-102 { transform: scale(1.02); }
+  .scale-103 { transform: scale(1.03); }
+  .scale-98 { transform: scale(0.98); }
+  .scale-97 { transform: scale(0.97); }
+}
+
+/* 現代化動畫關鍵幀 */
+
+/* 浮動效果 */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* 脈動光暈 */
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 20px rgba(8, 145, 178, 0.3);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 0 0 40px rgba(8, 145, 178, 0.6);
+    transform: scale(1.02);
+  }
+}
+
+/* 滑入效果 */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 淡入效果 */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 縮放淡入 */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 柔和彈跳 */
+@keyframes bounce-soft {
+  0%, 100% {
+    transform: translateY(0%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(-3%);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+/* 光流動畫 */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* 旋轉載入 */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 動畫類別 */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite alternate;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out;
+}
+
+.animate-bounce-soft {
+  animation: bounce-soft 2s infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background-size: 200% 100%;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* 延遲動畫 */
+.animate-delay-75 { animation-delay: 75ms; }
+.animate-delay-100 { animation-delay: 100ms; }
+.animate-delay-150 { animation-delay: 150ms; }
+.animate-delay-200 { animation-delay: 200ms; }
+.animate-delay-300 { animation-delay: 300ms; }
+.animate-delay-500 { animation-delay: 500ms; }
+.animate-delay-700 { animation-delay: 700ms; }
+.animate-delay-1000 { animation-delay: 1000ms; }
+
+/* PWA 支援與現代化 */
+@media (display-mode: standalone) {
+  body {
+    @apply safe-top safe-bottom;
+  }
+
+  .glass-card {
+    backdrop-filter: blur(20px);
+  }
+}
+
+/* 響應式玻璃效果 */
+@media (max-width: 768px) {
+  .glass-card {
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 text-base;
+  }
+}
+
+/* 深色模式現代化支援 */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #1e293b 100%);
+  }
+
+  .glass-card {
+    background: rgba(0, 0, 0, 0.25);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .input-glass {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #06b6d4, #14b8a6, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* 高對比度模式現代化 */
+@media (prefers-contrast: high) {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #000;
+  }
+
+  .btn-primary {
+    border: 3px solid rgba(255, 255, 255, 0.8);
+  }
+
+  .text-gradient {
+    -webkit-text-fill-color: #0891b2;
+  }
+}
+
+/* 減少動畫偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-float,
+  .animate-pulse-glow,
+  .animate-bounce-soft {
+    animation: none !important;
+  }
+}
+
+/* 列印樣式現代化 */
+@media print {
+  .no-print,
+  .glass-card,
+  .btn-primary,
+  .btn-secondary {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+
+  .container-glass {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+}
+
+/* 高解析度螢幕最佳化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .glass-card {
+    backdrop-filter: blur(18px);
+  }
+
+  .loading-modern::before {
+    border-width: 1px;
+  }
+}

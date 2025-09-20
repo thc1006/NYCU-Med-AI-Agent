@@ -1,0 +1,85 @@
+{
+  "short_name": "醫療AI助手",
+  "name": "台灣醫療AI助手 - 症狀評估與醫院搜尋",
+  "description": "提供症狀分級評估與就近醫療院所搜尋服務，協助您快速判斷症狀嚴重程度並找到適合的醫療資源。",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#EF4444",
+  "background_color": "#FFFFFF",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "zh-TW",
+  "dir": "ltr",
+  "categories": ["health", "medical", "utilities"],
+  "screenshots": [
+    {
+      "src": "screenshot-narrow.jpg",
+      "sizes": "540x720",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "screenshot-wide.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "症狀評估",
+      "short_name": "評估",
+      "description": "快速進行症狀分級評估",
+      "url": "/?action=assess",
+      "icons": [
+        {
+          "src": "icon-assess.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "緊急撥號",
+      "short_name": "緊急",
+      "description": "快速撥打緊急電話",
+      "url": "/?action=emergency",
+      "icons": [
+        {
+          "src": "icon-emergency.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "查詢歷史",
+      "short_name": "歷史",
+      "description": "查看症狀查詢歷史",
+      "url": "/history",
+      "icons": [
+        {
+          "src": "icon-history.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}
